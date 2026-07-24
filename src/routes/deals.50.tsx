@@ -35,7 +35,7 @@ function Deals50() {
         <FilterBar items={universe} filters={filters} onChange={setFilters} />
         <p className="mt-4 text-sm font-semibold text-muted-foreground">{results.length} items</p>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {results.map((item) => <DishCard key={item.id} item={item} />)}
+          {results.map((item, i) => <Reveal key={item.id} delay={Math.min(i, 8) * 30}><DishCard item={item} /></Reveal>)}
         </div>
       </div>
       <Footer />
