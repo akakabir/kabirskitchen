@@ -17,6 +17,7 @@ const nav = [
   { to: "/deals/99", label: "₹99 Only" },
   { to: "/selling-hot", label: "🔥 Selling Hot" },
   { to: "/hygiene", label: "Hygiene" },
+  { to: "/help", label: "Help" },
 ];
 
 export function Header({ showSearch, searchValue, onSearchChange }: Props) {
