@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Leaf, ChefHat, Flame, ShieldCheck, Package, Truck } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Reveal } from "@/components/Reveal";
 
 export const Route = createFileRoute("/hygiene")({
   head: () => ({
@@ -38,19 +39,21 @@ function Hygiene() {
         </div>
         <div className="mt-10 space-y-6">
           {steps.map(({ icon: Icon, title, body, img }, i) => (
-            <div key={title} className={`grid gap-6 rounded-3xl border border-border bg-card p-6 md:grid-cols-2 md:items-center ${i % 2 ? "md:[&>div:first-child]:order-2" : ""}`}>
-              <div>
-                <div className="flex items-center gap-2 text-primary">
-                  <div className="grid h-10 w-10 place-items-center rounded-2xl bg-primary/15"><Icon className="h-5 w-5" /></div>
-                  <span className="text-xs font-black uppercase tracking-wider">Step {i + 1}</span>
+            <Reveal key={title} delay={i * 50}>
+              <div className={`grid gap-6 rounded-3xl border border-border bg-card p-6 md:grid-cols-2 md:items-center ${i % 2 ? "md:[&>div:first-child]:order-2" : ""}`}>
+                <div>
+                  <div className="flex items-center gap-2 text-primary">
+                    <div className="grid h-10 w-10 place-items-center rounded-2xl bg-primary/15"><Icon className="h-5 w-5" /></div>
+                    <span className="text-xs font-black uppercase tracking-wider">Step {i + 1}</span>
+                  </div>
+                  <h2 className="mt-2 text-3xl font-black">{title}</h2>
+                  <p className="mt-2 text-muted-foreground">{body}</p>
                 </div>
-                <h2 className="mt-2 text-3xl font-black">{title}</h2>
-                <p className="mt-2 text-muted-foreground">{body}</p>
+                <div className="overflow-hidden rounded-2xl bg-muted">
+                  <img src={img} alt={title} className="aspect-video w-full object-cover" />
+                </div>
               </div>
-              <div className="overflow-hidden rounded-2xl bg-muted">
-                <img src={img} alt={title} className="aspect-video w-full object-cover" />
-              </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>

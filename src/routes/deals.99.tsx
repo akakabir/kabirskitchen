@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCartBar } from "@/components/StickyCartBar";
 import { DishCard } from "@/components/DishCard";
+import { Reveal } from "@/components/Reveal";
 import { FilterBar, applyFilters, emptyFilters, type Filters } from "@/components/FilterBar";
 import { ALL_ITEMS } from "@/lib/data";
 
@@ -35,7 +36,7 @@ function Deals99() {
         <FilterBar items={universe} filters={filters} onChange={setFilters} />
         <p className="mt-4 text-sm font-semibold text-muted-foreground">{results.length} items</p>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {results.map((item) => <DishCard key={item.id} item={item} />)}
+          {results.map((item, i) => <Reveal key={item.id} delay={Math.min(i, 8) * 30}><DishCard item={item} /></Reveal>)}
         </div>
       </div>
       <Footer />
