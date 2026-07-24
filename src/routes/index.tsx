@@ -13,7 +13,7 @@ export const Route = createFileRoute("/")({
       { title: "Kabir's Kitchen — Cloud Kitchen Delivery" },
       { name: "description", content: "Order Indian, Chinese, Arabian and desserts — fresh, hygienic, delivered hot." },
       { property: "og:title", content: "Kabir's Kitchen — Cloud Kitchen Delivery" },
-      { property: "og:description", content: "Fresh Indian, Chinese, Arabian & desserts, delivered hot." },
+      { property: "og:description", content: "Order Indian, Chinese, Arabian and desserts — fresh, hygienic, delivered hot." },
     ],
   }),
   component: Home,
