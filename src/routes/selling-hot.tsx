@@ -37,10 +37,10 @@ function SellingHot() {
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {items.map((it, i) => (
-            <div key={it.id} className="relative">
+            <Reveal key={it.id} delay={Math.min(i, 8) * 30} className="relative">
               <DishCard item={it} rank={i + 1} />
               <p className="mt-1 text-center text-[11px] font-semibold text-muted-foreground">{it.popularity} orders this week</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
