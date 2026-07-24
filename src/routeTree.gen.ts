@@ -9,38 +9,326 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SellingHotRouteImport } from './routes/selling-hot'
+import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as MenuRouteImport } from './routes/menu'
+import { Route as HygieneRouteImport } from './routes/hygiene'
+import { Route as DessertsRouteImport } from './routes/desserts'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SettingsThemeRouteImport } from './routes/settings.theme'
+import { Route as DishIdRouteImport } from './routes/dish.$id'
+import { Route as DessertIdRouteImport } from './routes/dessert.$id'
+import { Route as Deals99RouteImport } from './routes/deals.99'
+import { Route as Deals50RouteImport } from './routes/deals.50'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SellingHotRoute = SellingHotRouteImport.update({
+  id: '/selling-hot',
+  path: '/selling-hot',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuRoute = MenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HygieneRoute = HygieneRouteImport.update({
+  id: '/hygiene',
+  path: '/hygiene',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DessertsRoute = DessertsRouteImport.update({
+  id: '/desserts',
+  path: '/desserts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsThemeRoute = SettingsThemeRouteImport.update({
+  id: '/theme',
+  path: '/theme',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const DishIdRoute = DishIdRouteImport.update({
+  id: '/dish/$id',
+  path: '/dish/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DessertIdRoute = DessertIdRouteImport.update({
+  id: '/dessert/$id',
+  path: '/dessert/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Deals99Route = Deals99RouteImport.update({
+  id: '/deals/99',
+  path: '/deals/99',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Deals50Route = Deals50RouteImport.update({
+  id: '/deals/50',
+  path: '/deals/50',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
+  '/desserts': typeof DessertsRoute
+  '/hygiene': typeof HygieneRoute
+  '/menu': typeof MenuRoute
+  '/orders': typeof OrdersRoute
+  '/selling-hot': typeof SellingHotRoute
+  '/settings': typeof SettingsRouteWithChildren
+  '/terms': typeof TermsRoute
+  '/deals/50': typeof Deals50Route
+  '/deals/99': typeof Deals99Route
+  '/dessert/$id': typeof DessertIdRoute
+  '/dish/$id': typeof DishIdRoute
+  '/settings/theme': typeof SettingsThemeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
+  '/desserts': typeof DessertsRoute
+  '/hygiene': typeof HygieneRoute
+  '/menu': typeof MenuRoute
+  '/orders': typeof OrdersRoute
+  '/selling-hot': typeof SellingHotRoute
+  '/settings': typeof SettingsRouteWithChildren
+  '/terms': typeof TermsRoute
+  '/deals/50': typeof Deals50Route
+  '/deals/99': typeof Deals99Route
+  '/dessert/$id': typeof DessertIdRoute
+  '/dish/$id': typeof DishIdRoute
+  '/settings/theme': typeof SettingsThemeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
+  '/desserts': typeof DessertsRoute
+  '/hygiene': typeof HygieneRoute
+  '/menu': typeof MenuRoute
+  '/orders': typeof OrdersRoute
+  '/selling-hot': typeof SellingHotRoute
+  '/settings': typeof SettingsRouteWithChildren
+  '/terms': typeof TermsRoute
+  '/deals/50': typeof Deals50Route
+  '/deals/99': typeof Deals99Route
+  '/dessert/$id': typeof DessertIdRoute
+  '/dish/$id': typeof DishIdRoute
+  '/settings/theme': typeof SettingsThemeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/checkout'
+    | '/contact'
+    | '/desserts'
+    | '/hygiene'
+    | '/menu'
+    | '/orders'
+    | '/selling-hot'
+    | '/settings'
+    | '/terms'
+    | '/deals/50'
+    | '/deals/99'
+    | '/dessert/$id'
+    | '/dish/$id'
+    | '/settings/theme'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/checkout'
+    | '/contact'
+    | '/desserts'
+    | '/hygiene'
+    | '/menu'
+    | '/orders'
+    | '/selling-hot'
+    | '/settings'
+    | '/terms'
+    | '/deals/50'
+    | '/deals/99'
+    | '/dessert/$id'
+    | '/dish/$id'
+    | '/settings/theme'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/checkout'
+    | '/contact'
+    | '/desserts'
+    | '/hygiene'
+    | '/menu'
+    | '/orders'
+    | '/selling-hot'
+    | '/settings'
+    | '/terms'
+    | '/deals/50'
+    | '/deals/99'
+    | '/dessert/$id'
+    | '/dish/$id'
+    | '/settings/theme'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRoute
+  ContactRoute: typeof ContactRoute
+  DessertsRoute: typeof DessertsRoute
+  HygieneRoute: typeof HygieneRoute
+  MenuRoute: typeof MenuRoute
+  OrdersRoute: typeof OrdersRoute
+  SellingHotRoute: typeof SellingHotRoute
+  SettingsRoute: typeof SettingsRouteWithChildren
+  TermsRoute: typeof TermsRoute
+  Deals50Route: typeof Deals50Route
+  Deals99Route: typeof Deals99Route
+  DessertIdRoute: typeof DessertIdRoute
+  DishIdRoute: typeof DishIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/selling-hot': {
+      id: '/selling-hot'
+      path: '/selling-hot'
+      fullPath: '/selling-hot'
+      preLoaderRoute: typeof SellingHotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu': {
+      id: '/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hygiene': {
+      id: '/hygiene'
+      path: '/hygiene'
+      fullPath: '/hygiene'
+      preLoaderRoute: typeof HygieneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/desserts': {
+      id: '/desserts'
+      path: '/desserts'
+      fullPath: '/desserts'
+      preLoaderRoute: typeof DessertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +336,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/theme': {
+      id: '/settings/theme'
+      path: '/theme'
+      fullPath: '/settings/theme'
+      preLoaderRoute: typeof SettingsThemeRouteImport
+      parentRoute: typeof SettingsRoute
+    }
+    '/dish/$id': {
+      id: '/dish/$id'
+      path: '/dish/$id'
+      fullPath: '/dish/$id'
+      preLoaderRoute: typeof DishIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dessert/$id': {
+      id: '/dessert/$id'
+      path: '/dessert/$id'
+      fullPath: '/dessert/$id'
+      preLoaderRoute: typeof DessertIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deals/99': {
+      id: '/deals/99'
+      path: '/deals/99'
+      fullPath: '/deals/99'
+      preLoaderRoute: typeof Deals99RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deals/50': {
+      id: '/deals/50'
+      path: '/deals/50'
+      fullPath: '/deals/50'
+      preLoaderRoute: typeof Deals50RouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface SettingsRouteChildren {
+  SettingsThemeRoute: typeof SettingsThemeRoute
+}
+
+const SettingsRouteChildren: SettingsRouteChildren = {
+  SettingsThemeRoute: SettingsThemeRoute,
+}
+
+const SettingsRouteWithChildren = SettingsRoute._addFileChildren(
+  SettingsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRoute,
+  ContactRoute: ContactRoute,
+  DessertsRoute: DessertsRoute,
+  HygieneRoute: HygieneRoute,
+  MenuRoute: MenuRoute,
+  OrdersRoute: OrdersRoute,
+  SellingHotRoute: SellingHotRoute,
+  SettingsRoute: SettingsRouteWithChildren,
+  TermsRoute: TermsRoute,
+  Deals50Route: Deals50Route,
+  Deals99Route: Deals99Route,
+  DessertIdRoute: DessertIdRoute,
+  DishIdRoute: DishIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
