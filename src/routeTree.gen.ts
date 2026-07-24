@@ -15,6 +15,7 @@ import { Route as SellingHotRouteImport } from './routes/selling-hot'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as HygieneRouteImport } from './routes/hygiene'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as DessertsRouteImport } from './routes/desserts'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CheckoutRouteImport } from './routes/checkout'
@@ -55,6 +56,11 @@ const MenuRoute = MenuRouteImport.update({
 const HygieneRoute = HygieneRouteImport.update({
   id: '/hygiene',
   path: '/hygiene',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DessertsRoute = DessertsRouteImport.update({
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/desserts': typeof DessertsRoute
+  '/help': typeof HelpRoute
   '/hygiene': typeof HygieneRoute
   '/menu': typeof MenuRoute
   '/orders': typeof OrdersRoute
@@ -139,6 +146,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/desserts': typeof DessertsRoute
+  '/help': typeof HelpRoute
   '/hygiene': typeof HygieneRoute
   '/menu': typeof MenuRoute
   '/orders': typeof OrdersRoute
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/desserts': typeof DessertsRoute
+  '/help': typeof HelpRoute
   '/hygiene': typeof HygieneRoute
   '/menu': typeof MenuRoute
   '/orders': typeof OrdersRoute
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/desserts'
+    | '/help'
     | '/hygiene'
     | '/menu'
     | '/orders'
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/desserts'
+    | '/help'
     | '/hygiene'
     | '/menu'
     | '/orders'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/desserts'
+    | '/help'
     | '/hygiene'
     | '/menu'
     | '/orders'
@@ -238,6 +250,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   DessertsRoute: typeof DessertsRoute
+  HelpRoute: typeof HelpRoute
   HygieneRoute: typeof HygieneRoute
   MenuRoute: typeof MenuRoute
   OrdersRoute: typeof OrdersRoute
@@ -292,6 +305,13 @@ declare module '@tanstack/react-router' {
       path: '/hygiene'
       fullPath: '/hygiene'
       preLoaderRoute: typeof HygieneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/desserts': {
@@ -393,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   DessertsRoute: DessertsRoute,
+  HelpRoute: HelpRoute,
   HygieneRoute: HygieneRoute,
   MenuRoute: MenuRoute,
   OrdersRoute: OrdersRoute,
