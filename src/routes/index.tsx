@@ -109,18 +109,20 @@ function Home() {
 
       {/* Trending carousel */}
       <section className="mx-auto max-w-7xl px-4 py-12">
-        <div className="mb-4 flex items-end justify-between">
-          <div>
-            <h2 className="text-2xl font-black">🔥 Trending now</h2>
-            <p className="text-sm text-muted-foreground">Real-world best-sellers this week.</p>
-          </div>
-          <Link to="/selling-hot" className="text-sm font-bold text-primary hover:underline">See all →</Link>
-        </div>
-        <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-          {trending.map((item) => (
-            <div key={item.id} className="w-64 shrink-0">
-              <DishCard item={item} />
+        <Reveal>
+          <div className="mb-4 flex items-end justify-between">
+            <div>
+              <h2 className="text-2xl font-black">🔥 Trending now</h2>
+              <p className="text-sm text-muted-foreground">Real-world best-sellers this week.</p>
             </div>
+            <Link to="/selling-hot" className="text-sm font-bold text-primary hover:underline">See all →</Link>
+          </div>
+        </Reveal>
+        <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+          {trending.map((item, i) => (
+            <Reveal key={item.id} delay={i * 40} className="w-64 shrink-0">
+              <DishCard item={item} />
+            </Reveal>
           ))}
         </div>
       </section>
