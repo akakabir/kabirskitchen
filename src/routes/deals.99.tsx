@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCartBar } from "@/components/StickyCartBar";
 import { DishCard } from "@/components/DishCard";
+import { Reveal } from "@/components/Reveal";
 import { FilterBar, applyFilters, emptyFilters, type Filters } from "@/components/FilterBar";
 import { ALL_ITEMS } from "@/lib/data";
 
