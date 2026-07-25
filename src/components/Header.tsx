@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { MapPin, Search, ShoppingBag, Menu as MenuIcon, X } from "lucide-react";
+import { MapPin, Search, ShoppingBag, Menu as MenuIcon, X, Settings } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
 import { cn } from "@/lib/utils";
@@ -67,8 +67,19 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
         </nav>
 
         <Link
+          to="/settings"
+          aria-label="Settings"
+          className={cn(
+            "ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border bg-secondary transition-colors hover:border-primary hover:text-primary lg:ml-0",
+            path.startsWith("/settings") && "border-primary text-primary",
+          )}
+        >
+          <Settings className="h-4 w-4" />
+        </Link>
+
+        <Link
           to="/cart"
-          className="relative ml-auto flex shrink-0 items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-sm transition-transform hover:scale-105 lg:ml-0"
+          className="relative flex shrink-0 items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-sm transition-transform hover:scale-105"
         >
           <ShoppingBag className="h-4 w-4" />
           <span>Cart</span>
@@ -78,6 +89,7 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
             </span>
           )}
         </Link>
+
 
         <button className="lg:hidden" onClick={() => setOpen((v) => !v)} aria-label="Menu">
           {open ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}

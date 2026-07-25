@@ -5,8 +5,11 @@ import { Footer } from "@/components/Footer";
 import { StickyCartBar } from "@/components/StickyCartBar";
 import { DishCard } from "@/components/DishCard";
 import { Reveal } from "@/components/Reveal";
-import { FilterBar, applyFilters, emptyFilters, type Filters } from "@/components/FilterBar";
+import { applyFilters, emptyFilters, type Filters } from "@/components/FilterBar";
+import { FilterSidebar } from "@/components/FilterSidebar";
 import { ALL_ITEMS, type Cuisine } from "@/lib/data";
+
+
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/menu")({
@@ -61,31 +64,32 @@ function MenuPage() {
           ))}
         </div>
 
-        <FilterBar items={universe} filters={filters} onChange={setFilters} />
+        <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+          <aside className="lg:sticky lg:top-24 lg:self-start">
+            <FilterSidebar items={universe} filters={filters} onChange={setFilters} />
+          </aside>
 
-        <div className="mt-4 flex items-center justify-between">
-          <p className="text-sm font-semibold text-muted-foreground">{results.length} dishes</p>
-          {(filters.vegOnly || filters.nonvegOnly || filters.cuisines.length || filters.categories.length || filters.priceBuckets.length || filters.spice.length || filters.minRating) ? (
-            <button onClick={() => setFilters({ ...emptyFilters, q: filters.q })} className="text-xs font-bold text-primary hover:underline">
-              Clear filters
-            </button>
-          ) : null}
-        </div>
+          <div>
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold text-muted-foreground">{results.length} dishes</p>
+            </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {results.map((item, i) => (
-            <Reveal key={item.id} delay={Math.min(i, 8) * 30}>
-              <DishCard item={item} />
-            </Reveal>
-          ))}
-        </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+              {results.map((item, i) => (
+                <Reveal key={item.id} delay={Math.min(i, 8) * 30}>
+                  <DishCard item={item} />
+                </Reveal>
+              ))}
+            </div>
 
-        {results.length === 0 && (
-          <div className="rounded-3xl border border-dashed border-border p-12 text-center">
-            <p className="text-lg font-bold">No dishes match those filters</p>
-            <p className="mt-1 text-sm text-muted-foreground">Try clearing a few and browse again.</p>
+            {results.length === 0 && (
+              <div className="rounded-3xl border border-dashed border-border p-12 text-center">
+                <p className="text-lg font-bold">No dishes match those filters</p>
+                <p className="mt-1 text-sm text-muted-foreground">Try clearing a few and browse again.</p>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
       <Footer />
@@ -93,3 +97,4 @@ function MenuPage() {
     </div>
   );
 }
+

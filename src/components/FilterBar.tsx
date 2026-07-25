@@ -14,6 +14,8 @@ export interface Filters {
   spice: string[];
   dessertTypes?: string[];
   flavors?: string[];
+  priceMin?: number;
+  priceMax?: number;
 }
 
 export const emptyFilters: Filters = {
@@ -37,6 +39,8 @@ export function applyFilters(items: Dish[], f: Filters): Dish[] {
       });
       if (!ok) return false;
     }
+    if (typeof f.priceMin === "number" && d.price < f.priceMin) return false;
+    if (typeof f.priceMax === "number" && d.price > f.priceMax) return false;
     if (f.minRating && d.rating < f.minRating) return false;
     if (f.spice.length && (!d.spice || !f.spice.includes(d.spice))) return false;
     if (f.dessertTypes && f.dessertTypes.length && (!d.dessertType || !f.dessertTypes.includes(d.dessertType))) return false;
@@ -44,6 +48,7 @@ export function applyFilters(items: Dish[], f: Filters): Dish[] {
     return true;
   });
 }
+
 
 // Count how many items match if we toggle ON a candidate value while keeping others.
 function countWith(items: Dish[], base: Filters, patch: Partial<Filters>): number {

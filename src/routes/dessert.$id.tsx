@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Minus, Plus, Star } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -44,6 +44,13 @@ function DessertDetail() {
   const [sel, setSel] = useState<SelectedOptions>(() => item ? defaultSelection(item) : {});
   const [qty, setQty] = useState(1);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    setSel(item ? defaultSelection(item) : {});
+    setQty(1);
+    setMessage("");
+  }, [id]);
+
 
   const alt = useMemo(() => item ? DESSERTS.filter((d) => d.id !== item.id).slice(0, 8) : [], [item]);
 
