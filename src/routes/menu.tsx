@@ -6,7 +6,9 @@ import { StickyCartBar } from "@/components/StickyCartBar";
 import { DishCard } from "@/components/DishCard";
 import { Reveal } from "@/components/Reveal";
 import { FilterBar, applyFilters, emptyFilters, type Filters } from "@/components/FilterBar";
+import { FilterSidebar } from "@/components/FilterSidebar";
 import { ALL_ITEMS, type Cuisine } from "@/lib/data";
+
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/menu")({
