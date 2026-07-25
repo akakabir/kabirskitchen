@@ -5,8 +5,10 @@ import { Footer } from "@/components/Footer";
 import { StickyCartBar } from "@/components/StickyCartBar";
 import { DishCard } from "@/components/DishCard";
 import { Reveal } from "@/components/Reveal";
-import { FilterBar, applyFilters, emptyFilters, type Filters } from "@/components/FilterBar";
+import { applyFilters, emptyFilters, type Filters } from "@/components/FilterBar";
+import { FilterSidebar } from "@/components/FilterSidebar";
 import { DESSERTS, DESSERT_TYPES, CAKE_FLAVORS } from "@/lib/data";
+
 
 export const Route = createFileRoute("/desserts")({
   head: () => ({
