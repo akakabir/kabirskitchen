@@ -107,16 +107,14 @@ export function computeSelection(item: Dish, selection: SelectedOptions): { unit
 }
 
 export function defaultSelection(item: Dish): SelectedOptions {
+  // Nothing is pre-selected. Users explicitly choose flavor/size/etc.
   const sel: SelectedOptions = {};
   for (const g of item.options ?? []) {
-    if (g.required || g.type === "single") {
-      sel[g.id] = g.type === "multi" ? [] : g.choices[0].id;
-    } else {
-      sel[g.id] = [];
-    }
+    if (g.type === "multi") sel[g.id] = [];
   }
   return sel;
 }
+
 
 export function getLineItem(line: CartLine) {
   return getItem(line.itemId);
