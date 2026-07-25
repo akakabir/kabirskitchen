@@ -34,20 +34,29 @@ function Desserts() {
           <h1 className="mt-1 text-5xl font-black">Desserts</h1>
           <p className="mt-2 max-w-md text-sm text-muted-foreground">Custom cakes (any flavor, any size), Indian sweets, ice cream, baklava, kunafa & more.</p>
         </div>
-        <FilterBar
-          items={DESSERTS}
-          filters={filters}
-          onChange={setFilters}
-          showSpice={false}
-          showDessertTypes
-          dessertTypes={DESSERT_TYPES}
-          showFlavors
-          flavors={CAKE_FLAVORS}
-        />
-        <p className="mt-4 text-sm font-semibold text-muted-foreground">{results.length} desserts</p>
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {results.map((item, i) => <Reveal key={item.id} delay={Math.min(i, 8) * 30}><DishCard item={item} /></Reveal>)}
+        <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+          <aside className="lg:sticky lg:top-24 lg:self-start">
+            <FilterSidebar
+              items={DESSERTS}
+              filters={filters}
+              onChange={setFilters}
+              showSpice={false}
+              showCuisine={false}
+              showCategory={false}
+              showDessertTypes
+              dessertTypes={DESSERT_TYPES}
+              showFlavors
+              flavors={CAKE_FLAVORS}
+            />
+          </aside>
+          <div>
+            <p className="text-sm font-semibold text-muted-foreground">{results.length} desserts</p>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+              {results.map((item, i) => <Reveal key={item.id} delay={Math.min(i, 8) * 30}><DishCard item={item} /></Reveal>)}
+            </div>
+          </div>
         </div>
+
       </div>
       <Footer />
       <StickyCartBar />
