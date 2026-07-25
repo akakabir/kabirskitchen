@@ -48,6 +48,12 @@ function DishDetail() {
   const [sel, setSel] = useState<SelectedOptions>(() => item ? defaultSelection(item) : {});
   const [qty, setQty] = useState(1);
 
+  useEffect(() => {
+    setSel(item ? defaultSelection(item) : {});
+    setQty(1);
+  }, [id]);
+
+
   const alt = useMemo(
     () => item ? ALL_ITEMS.filter((i) => i.id !== item.id && i.cuisine === item.cuisine && i.kind === "dish").slice(0, 8) : [],
     [item],
