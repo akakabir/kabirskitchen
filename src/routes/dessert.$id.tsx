@@ -45,6 +45,13 @@ function DessertDetail() {
   const [qty, setQty] = useState(1);
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    setSel(item ? defaultSelection(item) : {});
+    setQty(1);
+    setMessage("");
+  }, [id]);
+
+
   const alt = useMemo(() => item ? DESSERTS.filter((d) => d.id !== item.id).slice(0, 8) : [], [item]);
 
   if (!item) return null;
