@@ -23,6 +23,13 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SettingsThemeRouteImport } from './routes/settings.theme'
+import { Route as SettingsPrivacyRouteImport } from './routes/settings.privacy'
+import { Route as SettingsPaymentRouteImport } from './routes/settings.payment'
+import { Route as SettingsNotificationsRouteImport } from './routes/settings.notifications'
+import { Route as SettingsLanguageRouteImport } from './routes/settings.language'
+import { Route as SettingsAddressesRouteImport } from './routes/settings.addresses'
+import { Route as SettingsAccountRouteImport } from './routes/settings.account'
+import { Route as SettingsAboutRouteImport } from './routes/settings.about'
 import { Route as DishIdRouteImport } from './routes/dish.$id'
 import { Route as DessertIdRouteImport } from './routes/dessert.$id'
 import { Route as Deals99RouteImport } from './routes/deals.99'
@@ -98,6 +105,41 @@ const SettingsThemeRoute = SettingsThemeRouteImport.update({
   path: '/theme',
   getParentRoute: () => SettingsRoute,
 } as any)
+const SettingsPrivacyRoute = SettingsPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const SettingsPaymentRoute = SettingsPaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const SettingsNotificationsRoute = SettingsNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const SettingsLanguageRoute = SettingsLanguageRouteImport.update({
+  id: '/language',
+  path: '/language',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const SettingsAddressesRoute = SettingsAddressesRouteImport.update({
+  id: '/addresses',
+  path: '/addresses',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const SettingsAccountRoute = SettingsAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const SettingsAboutRoute = SettingsAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => SettingsRoute,
+} as any)
 const DishIdRoute = DishIdRouteImport.update({
   id: '/dish/$id',
   path: '/dish/$id',
@@ -137,6 +179,13 @@ export interface FileRoutesByFullPath {
   '/deals/99': typeof Deals99Route
   '/dessert/$id': typeof DessertIdRoute
   '/dish/$id': typeof DishIdRoute
+  '/settings/about': typeof SettingsAboutRoute
+  '/settings/account': typeof SettingsAccountRoute
+  '/settings/addresses': typeof SettingsAddressesRoute
+  '/settings/language': typeof SettingsLanguageRoute
+  '/settings/notifications': typeof SettingsNotificationsRoute
+  '/settings/payment': typeof SettingsPaymentRoute
+  '/settings/privacy': typeof SettingsPrivacyRoute
   '/settings/theme': typeof SettingsThemeRoute
 }
 export interface FileRoutesByTo {
@@ -157,6 +206,13 @@ export interface FileRoutesByTo {
   '/deals/99': typeof Deals99Route
   '/dessert/$id': typeof DessertIdRoute
   '/dish/$id': typeof DishIdRoute
+  '/settings/about': typeof SettingsAboutRoute
+  '/settings/account': typeof SettingsAccountRoute
+  '/settings/addresses': typeof SettingsAddressesRoute
+  '/settings/language': typeof SettingsLanguageRoute
+  '/settings/notifications': typeof SettingsNotificationsRoute
+  '/settings/payment': typeof SettingsPaymentRoute
+  '/settings/privacy': typeof SettingsPrivacyRoute
   '/settings/theme': typeof SettingsThemeRoute
 }
 export interface FileRoutesById {
@@ -178,6 +234,13 @@ export interface FileRoutesById {
   '/deals/99': typeof Deals99Route
   '/dessert/$id': typeof DessertIdRoute
   '/dish/$id': typeof DishIdRoute
+  '/settings/about': typeof SettingsAboutRoute
+  '/settings/account': typeof SettingsAccountRoute
+  '/settings/addresses': typeof SettingsAddressesRoute
+  '/settings/language': typeof SettingsLanguageRoute
+  '/settings/notifications': typeof SettingsNotificationsRoute
+  '/settings/payment': typeof SettingsPaymentRoute
+  '/settings/privacy': typeof SettingsPrivacyRoute
   '/settings/theme': typeof SettingsThemeRoute
 }
 export interface FileRouteTypes {
@@ -200,6 +263,13 @@ export interface FileRouteTypes {
     | '/deals/99'
     | '/dessert/$id'
     | '/dish/$id'
+    | '/settings/about'
+    | '/settings/account'
+    | '/settings/addresses'
+    | '/settings/language'
+    | '/settings/notifications'
+    | '/settings/payment'
+    | '/settings/privacy'
     | '/settings/theme'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -220,6 +290,13 @@ export interface FileRouteTypes {
     | '/deals/99'
     | '/dessert/$id'
     | '/dish/$id'
+    | '/settings/about'
+    | '/settings/account'
+    | '/settings/addresses'
+    | '/settings/language'
+    | '/settings/notifications'
+    | '/settings/payment'
+    | '/settings/privacy'
     | '/settings/theme'
   id:
     | '__root__'
@@ -240,6 +317,13 @@ export interface FileRouteTypes {
     | '/deals/99'
     | '/dessert/$id'
     | '/dish/$id'
+    | '/settings/about'
+    | '/settings/account'
+    | '/settings/addresses'
+    | '/settings/language'
+    | '/settings/notifications'
+    | '/settings/payment'
+    | '/settings/privacy'
     | '/settings/theme'
   fileRoutesById: FileRoutesById
 }
@@ -363,6 +447,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsThemeRouteImport
       parentRoute: typeof SettingsRoute
     }
+    '/settings/privacy': {
+      id: '/settings/privacy'
+      path: '/privacy'
+      fullPath: '/settings/privacy'
+      preLoaderRoute: typeof SettingsPrivacyRouteImport
+      parentRoute: typeof SettingsRoute
+    }
+    '/settings/payment': {
+      id: '/settings/payment'
+      path: '/payment'
+      fullPath: '/settings/payment'
+      preLoaderRoute: typeof SettingsPaymentRouteImport
+      parentRoute: typeof SettingsRoute
+    }
+    '/settings/notifications': {
+      id: '/settings/notifications'
+      path: '/notifications'
+      fullPath: '/settings/notifications'
+      preLoaderRoute: typeof SettingsNotificationsRouteImport
+      parentRoute: typeof SettingsRoute
+    }
+    '/settings/language': {
+      id: '/settings/language'
+      path: '/language'
+      fullPath: '/settings/language'
+      preLoaderRoute: typeof SettingsLanguageRouteImport
+      parentRoute: typeof SettingsRoute
+    }
+    '/settings/addresses': {
+      id: '/settings/addresses'
+      path: '/addresses'
+      fullPath: '/settings/addresses'
+      preLoaderRoute: typeof SettingsAddressesRouteImport
+      parentRoute: typeof SettingsRoute
+    }
+    '/settings/account': {
+      id: '/settings/account'
+      path: '/account'
+      fullPath: '/settings/account'
+      preLoaderRoute: typeof SettingsAccountRouteImport
+      parentRoute: typeof SettingsRoute
+    }
+    '/settings/about': {
+      id: '/settings/about'
+      path: '/about'
+      fullPath: '/settings/about'
+      preLoaderRoute: typeof SettingsAboutRouteImport
+      parentRoute: typeof SettingsRoute
+    }
     '/dish/$id': {
       id: '/dish/$id'
       path: '/dish/$id'
@@ -395,10 +528,24 @@ declare module '@tanstack/react-router' {
 }
 
 interface SettingsRouteChildren {
+  SettingsAboutRoute: typeof SettingsAboutRoute
+  SettingsAccountRoute: typeof SettingsAccountRoute
+  SettingsAddressesRoute: typeof SettingsAddressesRoute
+  SettingsLanguageRoute: typeof SettingsLanguageRoute
+  SettingsNotificationsRoute: typeof SettingsNotificationsRoute
+  SettingsPaymentRoute: typeof SettingsPaymentRoute
+  SettingsPrivacyRoute: typeof SettingsPrivacyRoute
   SettingsThemeRoute: typeof SettingsThemeRoute
 }
 
 const SettingsRouteChildren: SettingsRouteChildren = {
+  SettingsAboutRoute: SettingsAboutRoute,
+  SettingsAccountRoute: SettingsAccountRoute,
+  SettingsAddressesRoute: SettingsAddressesRoute,
+  SettingsLanguageRoute: SettingsLanguageRoute,
+  SettingsNotificationsRoute: SettingsNotificationsRoute,
+  SettingsPaymentRoute: SettingsPaymentRoute,
+  SettingsPrivacyRoute: SettingsPrivacyRoute,
   SettingsThemeRoute: SettingsThemeRoute,
 }
 
