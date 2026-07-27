@@ -35,7 +35,7 @@ function Desserts() {
           <p className="mt-2 max-w-md text-sm text-muted-foreground">Custom cakes (any flavor, any size), Indian sweets, ice cream, baklava, kunafa & more.</p>
         </div>
         <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-          <aside className="lg:sticky lg:top-24 lg:self-start">
+          <aside className="lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:pr-2 no-scrollbar">
             <FilterSidebar
               items={DESSERTS}
               filters={filters}

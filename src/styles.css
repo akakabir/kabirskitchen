@@ -211,3 +211,101 @@
   70%, 90% { opacity: 0.3; }
 }
 @utility animate-blink { animation: blink 1.2s ease-in-out infinite; }
+
+/* ============================================================
+   Theme personalities — punchy per-theme flourishes.
+   ============================================================ */
+
+:root {
+  --grad-primary: linear-gradient(135deg,
+    color-mix(in oklab, var(--primary) 92%, white),
+    var(--primary) 55%,
+    color-mix(in oklab, var(--primary) 80%, black));
+  --glow-primary: 0 8px 22px -6px color-mix(in oklab, var(--primary) 55%, transparent);
+}
+
+/* LIGHT — crisp gradient buttons, soft shadows */
+[data-theme="light"] button.bg-primary,
+[data-theme="light"] a.bg-primary {
+  background-image: var(--grad-primary);
+  box-shadow: 0 6px 18px -8px color-mix(in oklab, var(--primary) 55%, transparent),
+              inset 0 1px 0 rgba(255,255,255,0.35);
+}
+[data-theme="light"] .bg-card { box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 8px 24px -18px rgba(15,23,42,0.15); }
+
+/* DARK — neon glow */
+[data-theme="dark"] button.bg-primary,
+[data-theme="dark"] a.bg-primary {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent),
+              0 0 22px color-mix(in oklab, var(--primary) 70%, transparent),
+              0 0 48px color-mix(in oklab, var(--primary) 35%, transparent);
+}
+[data-theme="dark"] .bg-card { box-shadow: 0 0 0 1px color-mix(in oklab, var(--foreground) 6%, transparent); }
+[data-theme="dark"] button.bg-primary:hover,
+[data-theme="dark"] a.bg-primary:hover {
+  box-shadow: 0 0 0 1px var(--primary),
+              0 0 28px color-mix(in oklab, var(--primary) 85%, transparent),
+              0 0 64px color-mix(in oklab, var(--primary) 45%, transparent);
+}
+
+/* EMERALD — organic corners, shimmer */
+[data-theme="emerald"] .rounded-3xl { border-radius: 2rem; }
+[data-theme="emerald"] .rounded-2xl { border-radius: 1.5rem; }
+[data-theme="emerald"] button.bg-primary,
+[data-theme="emerald"] a.bg-primary {
+  background-image: linear-gradient(135deg, oklch(0.7 0.16 160), oklch(0.55 0.17 165));
+  box-shadow: var(--glow-primary);
+  position: relative; overflow: hidden;
+}
+[data-theme="emerald"] button.bg-primary::after,
+[data-theme="emerald"] a.bg-primary::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+  transform: translateX(-120%); transition: transform 0.7s ease;
+}
+[data-theme="emerald"] button.bg-primary:hover::after,
+[data-theme="emerald"] a.bg-primary:hover::after { transform: translateX(120%); }
+
+/* TOPAZ — warm sunset + shimmer */
+[data-theme="topaz"] button.bg-primary,
+[data-theme="topaz"] a.bg-primary {
+  background-image: linear-gradient(135deg, #ffd166 0%, #f5b301 45%, #f37021 100%);
+  color: #2a1a05;
+  box-shadow: 0 8px 22px -6px rgba(245,179,1,0.55);
+  position: relative; overflow: hidden;
+}
+[data-theme="topaz"] button.bg-primary::after,
+[data-theme="topaz"] a.bg-primary::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%);
+  transform: translateX(-120%); transition: transform 0.9s ease;
+}
+[data-theme="topaz"] button.bg-primary:hover::after,
+[data-theme="topaz"] a.bg-primary:hover::after { transform: translateX(120%); }
+
+/* SAPPHIRE — glassy cards, sharper corners */
+[data-theme="sapphire"] .rounded-3xl { border-radius: 0.9rem; }
+[data-theme="sapphire"] .rounded-2xl { border-radius: 0.75rem; }
+[data-theme="sapphire"] .bg-card {
+  background-color: color-mix(in oklab, var(--card) 70%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--primary) 15%, transparent);
+}
+[data-theme="sapphire"] button.bg-primary,
+[data-theme="sapphire"] a.bg-primary {
+  background-image: linear-gradient(135deg, oklch(0.65 0.2 250), oklch(0.5 0.22 265));
+  box-shadow: 0 8px 22px -6px color-mix(in oklab, var(--primary) 55%, transparent);
+}
+
+/* RUBY — high-energy gradient, bouncy */
+[data-theme="ruby"] button.bg-primary,
+[data-theme="ruby"] a.bg-primary {
+  background-image: linear-gradient(135deg, #ff4d6d 0%, #c62828 55%, #7a1414 100%);
+  box-shadow: 0 10px 24px -6px rgba(198,40,40,0.55);
+  transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s;
+}
+[data-theme="ruby"] button.bg-primary:hover,
+[data-theme="ruby"] a.bg-primary:hover { transform: translateY(-2px) scale(1.04); }
+[data-theme="ruby"] button.bg-primary:active,
+[data-theme="ruby"] a.bg-primary:active { transform: scale(0.94); }
+
