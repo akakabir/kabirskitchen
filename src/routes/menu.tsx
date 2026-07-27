@@ -65,7 +65,7 @@ function MenuPage() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-          <aside className="lg:sticky lg:top-24 lg:self-start">
+          <aside className="lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:pr-2 no-scrollbar">
             <FilterSidebar items={universe} filters={filters} onChange={setFilters} />
           </aside>
 
