@@ -171,16 +171,6 @@ const beverageOpts = (): OptionGroup[] => [
   ]},
 ];
 const cakeOpts = (): OptionGroup[] => [
-  { id: "flavor", label: "Flavor", type: "single", required: true, choices: [
-    { id: "choc", label: "Chocolate", priceDelta: 0 },
-    { id: "rv", label: "Red Velvet", priceDelta: 40 },
-    { id: "van", label: "Vanilla", priceDelta: 0 },
-    { id: "bf", label: "Black Forest", priceDelta: 30 },
-    { id: "bs", label: "Butterscotch", priceDelta: 20 },
-    { id: "pa", label: "Pineapple", priceDelta: 0 },
-    { id: "fruit", label: "Fresh Fruit", priceDelta: 60 },
-    { id: "coffee", label: "Coffee", priceDelta: 30 },
-  ]},
   { id: "size", label: "Size", type: "single", required: true, choices: [
     { id: "500", label: "500 g", priceDelta: 0 },
     { id: "1000", label: "1 kg", priceDelta: 350 },
