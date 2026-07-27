@@ -79,9 +79,9 @@ function DessertDetail() {
           <ArrowLeft className="h-4 w-4" /> Back to desserts
         </Link>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="overflow-hidden rounded-3xl bg-muted">
-            <img src={item.image} alt={item.name} className="aspect-square w-full object-cover" />
+        <div className="grid gap-6 md:grid-cols-2 md:items-start">
+          <div className="overflow-hidden rounded-3xl bg-muted self-start">
+            <img src={item.image} alt={item.name} className="block aspect-square w-full object-cover" />
           </div>
           <div>
             <div className="flex items-center gap-2">
