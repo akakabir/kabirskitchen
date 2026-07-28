@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { CreditCard, Lock, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { CreditCard, Lock, Loader2, MapPin, Plus, Check } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { useCart, getLineItem } from "@/lib/cart-context";
+import { useLocation, type SavedAddress } from "@/lib/location-context";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -17,14 +18,46 @@ export const Route = createFileRoute("/checkout")({
   component: Checkout,
 });
 
+interface OrderAddress {
+  name: string;
+  phone: string;
+  house: string;
+  building: string;
+  landmark: string;
+  instructions: string;
+  formatted: string;
+  fullAddress: string;
+  pincode: string;
+}
+
+function fromSaved(a: SavedAddress | null): OrderAddress {
+  return {
+    name: "", phone: "",
+    house: a?.house ?? "",
+    building: a?.building ?? "",
+    landmark: a?.landmark ?? "",
+    instructions: a?.instructions ?? "",
+    formatted: a?.formatted ?? "",
+    fullAddress: a?.fullAddress ?? "",
+    pincode: a?.pincode ?? "",
+  };
+}
+
 function Checkout() {
   const { lines, totalWithFees } = useCart();
+  const { addresses, selectedId, setSelectedId, selected, openPicker } = useLocation();
   const nav = useNavigate();
-  const [form, setForm] = useState({ name: "", phone: "", address: "", pincode: "" });
+  const [form, setForm] = useState<OrderAddress>(() => fromSaved(selected));
   const [paying, setPaying] = useState(false);
 
-  const disabled = !form.name || !form.phone || !form.address || !form.pincode || lines.length === 0;
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm({ ...form, [k]: e.target.value });
+  // When user switches saved address, refill address fields (keep name/phone)
+  useEffect(() => {
+    setForm((f) => ({ ...fromSaved(selected), name: f.name, phone: f.phone }));
+  }, [selectedId, selected?.house, selected?.building, selected?.landmark, selected?.instructions, selected?.formatted, selected?.fullAddress, selected?.pincode]);
+
+  const disabled = !form.name || !form.phone || !form.house || !form.formatted || !form.pincode || lines.length === 0;
+  const set = <K extends keyof OrderAddress>(k: K) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm({ ...form, [k]: e.target.value });
 
   const pay = () => {
     setPaying(true);
@@ -53,16 +86,69 @@ function Checkout() {
         <div className="space-y-6">
           <h1 className="text-3xl font-black">Checkout</h1>
 
+          {/* Saved address picker */}
           <div className="rounded-3xl border border-border bg-card p-5">
-            <h2 className="text-lg font-black">Delivery address</h2>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <Input label="Full name" value={form.name} onChange={set("name")} placeholder="Kabir Sharma" />
-              <Input label="Phone" value={form.phone} onChange={set("phone")} placeholder="+91 98xxxxxx" />
-              <div className="sm:col-span-2">
-                <label className="mb-1 block text-xs font-black uppercase tracking-wider text-muted-foreground">Address</label>
-                <textarea rows={3} value={form.address} onChange={set("address")} placeholder="Flat / building / area" className="w-full rounded-2xl border border-border bg-secondary px-4 py-2 text-sm outline-none focus:border-primary" />
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <h2 className="text-lg font-black">Deliver to</h2>
+              <button
+                onClick={() => openPicker()}
+                className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold hover:border-primary hover:text-primary"
+              >
+                <Plus className="h-3.5 w-3.5" /> Add new
+              </button>
+            </div>
+            {addresses.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No saved addresses. Add one to continue.</p>
+            ) : (
+              <div className="grid gap-2 sm:grid-cols-2">
+                {addresses.map((a) => {
+                  const active = a.id === selectedId;
+                  return (
+                    <button
+                      key={a.id}
+                      onClick={() => setSelectedId(a.id)}
+                      className={`flex items-start gap-2 rounded-2xl border p-3 text-left text-sm transition-colors ${
+                        active ? "border-primary bg-primary/5" : "border-border bg-secondary hover:border-primary/60"
+                      }`}
+                    >
+                      <MapPin className={`mt-0.5 h-4 w-4 shrink-0 ${active ? "text-primary" : "text-muted-foreground"}`} />
+                      <div className="min-w-0 flex-1">
+                        <p className="flex items-center gap-1 font-black">
+                          {a.label}
+                          {active && <Check className="h-3.5 w-3.5 text-primary" />}
+                        </p>
+                        <p className="truncate text-xs text-muted-foreground">{a.formatted || a.fullAddress}</p>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
-              <Input label="Pincode" value={form.pincode} onChange={set("pincode")} placeholder="400050" />
+            )}
+          </div>
+
+          {/* Contact + address details (prefilled, editable per-order) */}
+          <div className="rounded-3xl border border-border bg-card p-5">
+            <h2 className="text-lg font-black">Address & instructions</h2>
+            <p className="mt-1 text-xs text-muted-foreground">Prefilled from your saved address. Edits apply to this order only.</p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <Input label="Full name *" value={form.name} onChange={set("name")} placeholder="Kabir Sharma" />
+              <Input label="Phone *" value={form.phone} onChange={set("phone")} placeholder="+91 98xxxxxx" />
+              <Input label="House / Flat no. & Floor *" value={form.house} onChange={set("house")} placeholder="Flat 402, 3rd floor" />
+              <Input label="Building / Society name" value={form.building} onChange={set("building")} placeholder="Sunshine Apts" />
+              <Input label="Landmark" value={form.landmark} onChange={set("landmark")} placeholder="Opp. HDFC ATM" />
+              <Input label="Pincode *" value={form.pincode} onChange={set("pincode")} placeholder="400050" />
+              <div className="sm:col-span-2">
+                <label className="mb-1 block text-xs font-black uppercase tracking-wider text-muted-foreground">Area / locality</label>
+                <div className="flex items-center gap-2 rounded-2xl border border-border bg-secondary px-4 py-2 text-sm">
+                  <MapPin className="h-4 w-4 text-primary" />
+                  <span className="min-w-0 flex-1 truncate">{form.formatted || "Pick from a saved address"}</span>
+                  <button onClick={() => openPicker()} className="text-xs font-bold text-primary hover:underline">Change</button>
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label className="mb-1 block text-xs font-black uppercase tracking-wider text-muted-foreground">Delivery instructions for the driver</label>
+                <textarea rows={2} value={form.instructions} onChange={set("instructions")} placeholder="Ring the bell twice · Leave at the door · Call on arrival" className="w-full rounded-2xl border border-border bg-secondary px-4 py-2 text-sm outline-none focus:border-primary" />
+              </div>
             </div>
           </div>
 
