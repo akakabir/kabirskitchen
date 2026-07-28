@@ -13,6 +13,8 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ThemeProvider } from "@/lib/theme-context";
 import { CartProvider } from "@/lib/cart-context";
+import { LocationProvider } from "@/lib/location-context";
+import { LocationPicker } from "@/components/LocationPicker";
 
 function NotFoundComponent() {
   return (
@@ -108,9 +110,12 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <CartProvider>
-          <Outlet />
-        </CartProvider>
+        <LocationProvider>
+          <CartProvider>
+            <Outlet />
+            <LocationPicker />
+          </CartProvider>
+        </LocationProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
