@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import type { Dish, Cuisine, Category } from "@/lib/data";
 import { PRICE_BUCKETS } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import SpecularButton from "@/components/SpecularButton";
 
 export interface Filters {
   q: string;
@@ -58,7 +59,7 @@ function countWith(items: Dish[], base: Filters, patch: Partial<Filters>): numbe
 interface ChipProps { active: boolean; onClick: () => void; children: React.ReactNode; }
 function Chip({ active, onClick, children }: ChipProps) {
   return (
-    <button
+    <SpecularButton
       onClick={onClick}
       className={cn(
         "shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors",
@@ -68,7 +69,7 @@ function Chip({ active, onClick, children }: ChipProps) {
       )}
     >
       {children}
-    </button>
+    </SpecularButton>
   );
 }
 

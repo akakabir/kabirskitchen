@@ -5,6 +5,7 @@ import type { Dish, Cuisine, Category } from "@/lib/data";
 import { PRICE_BUCKETS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { emptyFilters, applyFilters, type Filters } from "./FilterBar";
+import SpecularButton from "@/components/SpecularButton";
 
 interface Props {
   items: Dish[]; // full pool
@@ -27,13 +28,13 @@ function Section({ title, children, defaultOpen = true }: { title: string; child
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="border-b border-border py-4 last:border-b-0">
-      <button
+      <SpecularButton
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between text-left"
       >
         <span className="text-xs font-black uppercase tracking-wider text-foreground">{title}</span>
         <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform", open && "rotate-180")} />
-      </button>
+      </SpecularButton>
       {open && <div className="mt-3 space-y-2">{children}</div>}
     </div>
   );
@@ -47,7 +48,7 @@ interface RowProps {
 }
 function Row({ active, onClick, label, count }: RowProps) {
   return (
-    <button
+    <SpecularButton
       onClick={onClick}
       className={cn(
         "flex w-full items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-sm transition-colors",
@@ -68,13 +69,13 @@ function Row({ active, onClick, label, count }: RowProps) {
       {typeof count === "number" && (
         <span className={cn("text-xs", active ? "text-primary" : "text-muted-foreground")}>({count})</span>
       )}
-    </button>
+    </SpecularButton>
   );
 }
 
 function Chip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
-    <button
+    <SpecularButton
       onClick={onClick}
       className={cn(
         "rounded-full border px-3 py-1 text-xs font-semibold transition-colors",
@@ -82,7 +83,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       )}
     >
       {children}
-    </button>
+    </SpecularButton>
   );
 }
 
@@ -183,12 +184,12 @@ export function FilterSidebar({
           <h2 className="text-sm font-black">Filters</h2>
         </div>
         {hasAny ? (
-          <button
+          <SpecularButton
             onClick={() => onChange({ ...emptyFilters, q: filters.q })}
             className="flex items-center gap-1 text-xs font-bold text-primary hover:underline"
           >
             <X className="h-3 w-3" /> Clear
-          </button>
+          </SpecularButton>
         ) : null}
       </div>
 

@@ -5,6 +5,7 @@ import type { Dish } from "@/lib/data";
 import { useCart, computeSelection, defaultSelection, type SelectedOptions } from "@/lib/cart-context";
 import { CustomizationModal } from "./CustomizationModal";
 import { cn } from "@/lib/utils";
+import SpecularButton from "@/components/SpecularButton";
 
 export function VegDot({ veg }: { veg: boolean }) {
   return (
@@ -75,12 +76,12 @@ export function DishCard({ item, rank }: { item: Dish; rank?: number }) {
                 <Star className="h-3 w-3 fill-current text-amber-500" /> {item.rating.toFixed(1)}
               </span>
             </div>
-            <button
+            <SpecularButton
               onClick={quickAdd}
               className="flex items-center gap-1 rounded-full bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground shadow transition-transform hover:scale-105 active:scale-95"
             >
               <Plus className="h-3.5 w-3.5" /> {hasOptions ? "Add" : "Add"}
-            </button>
+            </SpecularButton>
           </div>
           {hasOptions && (
             <span className="text-[10px] text-muted-foreground">customizable</span>

@@ -310,3 +310,22 @@
 [data-theme="ruby"] button.bg-primary:active,
 [data-theme="ruby"] a.bg-primary:active { transform: scale(0.94); }
 
+
+/* ============================================================
+   Global shape setting — Round (default) vs Square.
+   Overrides per-theme corner tweaks so Sapphire is no longer
+   inconsistently square unless the user chooses it.
+   ============================================================ */
+:root { --border-radius: 18px; }
+[data-shape="square"] { --border-radius: 2px; }
+
+[data-shape="round"] .rounded-3xl { border-radius: 1.5rem; }
+[data-shape="round"] .rounded-2xl { border-radius: 1rem; }
+[data-shape="round"] .rounded-xl { border-radius: 0.85rem; }
+[data-shape="round"] .rounded-full { border-radius: 9999px; }
+
+[data-shape="square"] .rounded-3xl,
+[data-shape="square"] .rounded-2xl,
+[data-shape="square"] .rounded-xl,
+[data-shape="square"] .rounded-lg,
+[data-shape="square"] .rounded-full { border-radius: var(--border-radius); }

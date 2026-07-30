@@ -8,6 +8,7 @@ import {
   type NominatimResult,
   type SavedAddress,
 } from "@/lib/location-context";
+import SpecularButton from "@/components/SpecularButton";
 
 type LabelKind = "Home" | "Work" | "Other";
 
@@ -148,9 +149,9 @@ function PickerInner({
             <h2 className="text-lg font-black">{initial ? "Edit address" : "Set your delivery location"}</h2>
             <p className="text-xs text-muted-foreground">Powered by OpenStreetMap · free & keyless</p>
           </div>
-          <button onClick={onClose} aria-label="Close" className="grid h-9 w-9 place-items-center rounded-full hover:bg-secondary">
+          <SpecularButton onClick={onClose} aria-label="Close" className="grid h-9 w-9 place-items-center rounded-full hover:bg-secondary">
             <X className="h-5 w-5" />
-          </button>
+          </SpecularButton>
         </div>
 
         <div className="flex-1 overflow-y-auto">
@@ -172,28 +173,28 @@ function PickerInner({
                   </div>
                 )}
                 {results.map((r) => (
-                  <button
+                  <SpecularButton
                     key={r.place_id}
                     onClick={() => chooseResult(r)}
                     className="flex w-full items-start gap-2 border-t border-border/50 px-4 py-2.5 text-left text-sm first:border-t-0 hover:bg-secondary"
                   >
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                     <span className="line-clamp-2">{r.display_name}</span>
-                  </button>
+                  </SpecularButton>
                 ))}
               </div>
             )}
           </div>
 
           <div className="px-5 pt-3">
-            <button
+            <SpecularButton
               onClick={useCurrent}
               disabled={locating}
               className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-2 text-xs font-bold hover:border-primary hover:text-primary disabled:opacity-60"
             >
               {locating ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <LocateFixed className="h-3.5 w-3.5" />}
               Use my current location
-            </button>
+            </SpecularButton>
             {error && <p className="mt-2 text-xs text-destructive">{error}</p>}
           </div>
 
@@ -248,7 +249,7 @@ function PickerInner({
                   const Icon = k === "Home" ? Home : k === "Work" ? Briefcase : Star;
                   const active = draft.label === k;
                   return (
-                    <button
+                    <SpecularButton
                       key={k}
                       onClick={() => setDraft((d) => ({ ...d, label: k }))}
                       className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-xs font-bold transition-colors ${
@@ -258,7 +259,7 @@ function PickerInner({
                       }`}
                     >
                       <Icon className="h-3.5 w-3.5" /> {k}
-                    </button>
+                    </SpecularButton>
                   );
                 })}
               </div>
@@ -267,16 +268,16 @@ function PickerInner({
         </div>
 
         <div className="flex items-center justify-end gap-2 border-t border-border bg-card px-5 py-3">
-          <button onClick={onClose} className="rounded-full border border-border bg-secondary px-5 py-2 text-sm font-bold hover:border-primary">
+          <SpecularButton onClick={onClose} className="rounded-full border border-border bg-secondary px-5 py-2 text-sm font-bold hover:border-primary">
             Cancel
-          </button>
-          <button
+          </SpecularButton>
+          <SpecularButton
             onClick={() => canSave && onSave(draft)}
             disabled={!canSave}
             className="rounded-full bg-primary px-5 py-2 text-sm font-black text-primary-foreground shadow transition-transform hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {initial ? "Save changes" : "Save & use this address"}
-          </button>
+          </SpecularButton>
         </div>
       </div>
     </div>

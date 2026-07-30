@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Plus, MapPin, Trash2, Pencil, Check, Home as HomeIcon, Briefcase, Star } from "lucide-react";
 import { SettingsHeader, Card, PrimaryButton } from "@/components/SettingsBits";
 import { useLocation, type SavedAddress } from "@/lib/location-context";
+import SpecularButton from "@/components/SpecularButton";
 
 export const Route = createFileRoute("/settings/addresses")({
   head: () => ({ meta: [{ title: "Saved Addresses — Settings" }, { name: "description", content: "Manage your delivery addresses." }] }),
@@ -48,28 +49,28 @@ function AddressesPage() {
                   {a.instructions && <p className="mt-1 text-xs italic text-muted-foreground">Driver note: "{a.instructions}"</p>}
                   <div className="mt-2 flex flex-wrap gap-2">
                     {!isDefault && (
-                      <button
+                      <SpecularButton
                         onClick={() => setSelectedId(a.id)}
                         className="rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold hover:border-primary hover:text-primary"
                       >
                         Set as default
-                      </button>
+                      </SpecularButton>
                     )}
-                    <button
+                    <SpecularButton
                       onClick={() => openPicker(a.id)}
                       className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold hover:border-primary hover:text-primary"
                     >
                       <Pencil className="h-3 w-3" /> Edit
-                    </button>
+                    </SpecularButton>
                   </div>
                 </div>
-                <button
+                <SpecularButton
                   onClick={() => removeAddress(a.id)}
                   aria-label="Remove"
                   className="grid h-9 w-9 place-items-center rounded-full text-muted-foreground hover:bg-secondary hover:text-primary"
                 >
                   <Trash2 className="h-4 w-4" />
-                </button>
+                </SpecularButton>
               </div>
             </Card>
           );

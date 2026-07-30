@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+import SpecularButton from "@/components/SpecularButton";
 
 export function SettingsHeader({ title, desc }: { title: string; desc?: string }) {
   return (
@@ -60,23 +61,23 @@ export function Toggle({ label, storageKey, defaultOn = false }: { label: string
 
 export function PrimaryButton({ children, ...rest }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button
+    <SpecularButton
       {...rest}
       className={`inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-black text-primary-foreground shadow transition-transform hover:scale-[1.03] active:scale-95 ${rest.className ?? ""}`}
     >
       {children}
-    </button>
+    </SpecularButton>
   );
 }
 
 export function GhostButton({ children, ...rest }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button
+    <SpecularButton
       {...rest}
       className={`inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-5 py-2.5 text-sm font-bold hover:border-primary hover:text-primary ${rest.className ?? ""}`}
     >
       {children}
-    </button>
+    </SpecularButton>
   );
 }
 

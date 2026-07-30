@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Plus, CreditCard, Smartphone, Trash2 } from "lucide-react";
 import { SettingsHeader, Card, Field, TextInput, PrimaryButton, GhostButton, useLocal } from "@/components/SettingsBits";
+import SpecularButton from "@/components/SpecularButton";
 
 export const Route = createFileRoute("/settings/payment")({
   head: () => ({ meta: [{ title: "Payment Methods — Settings" }, { name: "description", content: "Manage saved cards and UPI." }] }),
@@ -56,13 +57,13 @@ function PaymentPage() {
                   {m.type === "card" ? `${m.brand} •••• ${m.last4}` : m.upi}
                 </p>
               </div>
-              <button
+              <SpecularButton
                 onClick={() => setList(list.filter((x) => x.id !== m.id))}
                 aria-label="Remove"
                 className="grid h-9 w-9 place-items-center rounded-full text-muted-foreground hover:bg-secondary hover:text-primary"
               >
                 <Trash2 className="h-4 w-4" />
-              </button>
+              </SpecularButton>
             </div>
           </Card>
         ))}
@@ -77,13 +78,13 @@ function PaymentPage() {
           <Card className="mt-2">
             <div className="mb-4 flex gap-2">
               {(["card", "upi"] as const).map((k) => (
-                <button
+                <SpecularButton
                   key={k}
                   onClick={() => setKind(k)}
                   className={`rounded-full px-4 py-1.5 text-sm font-bold transition-colors ${kind === k ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
                 >
                   {k === "card" ? "Card" : "UPI"}
-                </button>
+                </SpecularButton>
               ))}
             </div>
 

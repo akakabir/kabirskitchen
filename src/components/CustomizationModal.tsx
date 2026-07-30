@@ -4,6 +4,7 @@ import type { Dish } from "@/lib/data";
 import { useCart, computeSelection, defaultSelection, type SelectedOptions } from "@/lib/cart-context";
 import { VegDot } from "./DishCard";
 import { cn } from "@/lib/utils";
+import SpecularButton from "@/components/SpecularButton";
 
 export function CustomizationModal({ item, onClose }: { item: Dish; onClose: () => void }) {
   const { addLine } = useCart();
@@ -35,9 +36,9 @@ export function CustomizationModal({ item, onClose }: { item: Dish; onClose: () 
       >
         <div className="relative h-40 shrink-0 bg-muted">
           <img src={item.image} alt="" className="h-full w-full object-cover" />
-          <button onClick={onClose} className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-background/90 shadow">
+          <SpecularButton onClick={onClose} className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-background/90 shadow">
             <X className="h-4 w-4" />
-          </button>
+          </SpecularButton>
         </div>
 
         <div className="flex-1 space-y-4 overflow-y-auto p-5">
@@ -60,7 +61,7 @@ export function CustomizationModal({ item, onClose }: { item: Dish; onClose: () 
                     ? sel[g.id] === c.id
                     : Array.isArray(sel[g.id]) && (sel[g.id] as string[]).includes(c.id);
                   return (
-                    <button
+                    <SpecularButton
                       key={c.id}
                       onClick={() => toggle(g.id, c.id, g.type)}
                       className={cn(
@@ -71,7 +72,7 @@ export function CustomizationModal({ item, onClose }: { item: Dish; onClose: () 
                       )}
                     >
                       {c.label}{c.priceDelta > 0 && ` +₹${c.priceDelta}`}
-                    </button>
+                    </SpecularButton>
                   );
                 })}
               </div>
@@ -81,20 +82,20 @@ export function CustomizationModal({ item, onClose }: { item: Dish; onClose: () 
 
         <div className="flex items-center gap-3 border-t border-border bg-background p-4">
           <div className="flex items-center gap-2 rounded-full border border-border px-2 py-1">
-            <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="grid h-7 w-7 place-items-center rounded-full hover:bg-secondary">
+            <SpecularButton onClick={() => setQty((q) => Math.max(1, q - 1))} className="grid h-7 w-7 place-items-center rounded-full hover:bg-secondary">
               <Minus className="h-3.5 w-3.5" />
-            </button>
+            </SpecularButton>
             <span className="w-6 text-center text-sm font-bold">{qty}</span>
-            <button onClick={() => setQty((q) => q + 1)} className="grid h-7 w-7 place-items-center rounded-full hover:bg-secondary">
+            <SpecularButton onClick={() => setQty((q) => q + 1)} className="grid h-7 w-7 place-items-center rounded-full hover:bg-secondary">
               <Plus className="h-3.5 w-3.5" />
-            </button>
+            </SpecularButton>
           </div>
-          <button
+          <SpecularButton
             onClick={submit}
             className="flex flex-1 items-center justify-center rounded-full bg-primary py-3 text-sm font-black text-primary-foreground shadow transition-transform hover:scale-[1.02] active:scale-95"
           >
             Add to Cart — ₹{unitPrice * qty}
-          </button>
+          </SpecularButton>
         </div>
       </div>
     </div>

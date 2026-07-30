@@ -11,6 +11,7 @@ import { ALL_ITEMS, type Cuisine } from "@/lib/data";
 
 
 import { cn } from "@/lib/utils";
+import SpecularButton from "@/components/SpecularButton";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -51,7 +52,7 @@ function MenuPage() {
         {/* Cuisine tabs */}
         <div className="mb-4 flex gap-2 overflow-x-auto no-scrollbar">
           {tabs.map((t) => (
-            <button
+            <SpecularButton
               key={t}
               onClick={() => setTab(t)}
               className={cn(
@@ -60,7 +61,7 @@ function MenuPage() {
               )}
             >
               {t}
-            </button>
+            </SpecularButton>
           ))}
         </div>
 

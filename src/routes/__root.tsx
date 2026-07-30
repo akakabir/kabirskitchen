@@ -11,7 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { ThemeProvider } from "@/lib/theme-context";
+import { ThemeProvider, useThemeFx } from "@/lib/theme-context";
+import ClickSpark from "@/components/ClickSpark";
 import { CartProvider } from "@/lib/cart-context";
 import { LocationProvider } from "@/lib/location-context";
 import { LocationPicker } from "@/components/LocationPicker";
@@ -105,6 +106,15 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function ThemedSpark({ children }: { children: ReactNode }) {
+  const fx = useThemeFx();
+  return (
+    <ClickSpark sparkColor={fx.spark} sparkSize={10} sparkRadius={18} sparkCount={8} duration={420}>
+      {children}
+    </ClickSpark>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
@@ -112,8 +122,10 @@ function RootComponent() {
       <ThemeProvider>
         <LocationProvider>
           <CartProvider>
-            <Outlet />
-            <LocationPicker />
+            <ThemedSpark>
+              <Outlet />
+              <LocationPicker />
+            </ThemedSpark>
           </CartProvider>
         </LocationProvider>
       </ThemeProvider>

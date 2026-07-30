@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { useCart, getLineItem } from "@/lib/cart-context";
 import { useLocation, type SavedAddress } from "@/lib/location-context";
+import SpecularButton from "@/components/SpecularButton";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -90,12 +91,12 @@ function Checkout() {
           <div className="rounded-3xl border border-border bg-card p-5">
             <div className="mb-3 flex items-center justify-between gap-2">
               <h2 className="text-lg font-black">Deliver to</h2>
-              <button
+              <SpecularButton
                 onClick={() => openPicker()}
                 className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold hover:border-primary hover:text-primary"
               >
                 <Plus className="h-3.5 w-3.5" /> Add new
-              </button>
+              </SpecularButton>
             </div>
             {addresses.length === 0 ? (
               <p className="text-sm text-muted-foreground">No saved addresses. Add one to continue.</p>
@@ -104,7 +105,7 @@ function Checkout() {
                 {addresses.map((a) => {
                   const active = a.id === selectedId;
                   return (
-                    <button
+                    <SpecularButton
                       key={a.id}
                       onClick={() => setSelectedId(a.id)}
                       className={`flex items-start gap-2 rounded-2xl border p-3 text-left text-sm transition-colors ${
@@ -119,7 +120,7 @@ function Checkout() {
                         </p>
                         <p className="truncate text-xs text-muted-foreground">{a.formatted || a.fullAddress}</p>
                       </div>
-                    </button>
+                    </SpecularButton>
                   );
                 })}
               </div>
@@ -142,7 +143,7 @@ function Checkout() {
                 <div className="flex items-center gap-2 rounded-2xl border border-border bg-secondary px-4 py-2 text-sm">
                   <MapPin className="h-4 w-4 text-primary" />
                   <span className="min-w-0 flex-1 truncate">{form.formatted || "Pick from a saved address"}</span>
-                  <button onClick={() => openPicker()} className="text-xs font-bold text-primary hover:underline">Change</button>
+                  <SpecularButton onClick={() => openPicker()} className="text-xs font-bold text-primary hover:underline">Change</SpecularButton>
                 </div>
               </div>
               <div className="sm:col-span-2">
@@ -163,13 +164,13 @@ function Checkout() {
                 <span key={m} className="rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold">{m}</span>
               ))}
             </div>
-            <button
+            <SpecularButton
               onClick={pay}
               disabled={disabled || paying}
               className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3 text-sm font-black text-primary-foreground shadow-lg transition disabled:cursor-not-allowed disabled:opacity-50"
             >
               {paying ? <><Loader2 className="h-4 w-4 animate-spin" /> Processing payment…</> : <><CreditCard className="h-4 w-4" /> Pay Now — ₹{total}</>}
-            </button>
+            </SpecularButton>
           </div>
         </div>
 
