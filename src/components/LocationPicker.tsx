@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { X, Search, LocateFixed, MapPin, Loader2, Home, Briefcase, Star } from "lucide-react";
 import {
-import SpecularButton from "@/components/SpecularButton";
   useLocation,
   searchAddress,
   reverseGeocode,
@@ -9,6 +8,7 @@ import SpecularButton from "@/components/SpecularButton";
   type NominatimResult,
   type SavedAddress,
 } from "@/lib/location-context";
+import SpecularButton from "@/components/SpecularButton";
 
 type LabelKind = "Home" | "Work" | "Other";
 
