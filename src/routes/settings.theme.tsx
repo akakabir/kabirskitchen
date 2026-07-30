@@ -17,7 +17,7 @@ export const Route = createFileRoute("/settings/theme")({
 });
 
 function ThemePage() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, shape, setShape } = useTheme();
   return (
     <div>
       <h2 className="mb-2 text-2xl font-black">Theme</h2>
@@ -57,6 +57,30 @@ function ThemePage() {
             </SpecularButton>
           );
         })}
+      </div>
+
+      <h2 className="mb-2 mt-10 text-2xl font-black">Shape</h2>
+      <p className="mb-4 text-sm text-muted-foreground">Corner style for buttons and controls across every theme.</p>
+      <div className="grid max-w-md grid-cols-2 gap-3">
+        {(["round", "square"] as const).map((s) => (
+          <SpecularButton
+            key={s}
+            onClick={() => setShape(s)}
+            className={cn(
+              "flex items-center justify-between border-2 p-4 text-left transition-transform hover:scale-[1.02]",
+              s === "round" ? "rounded-3xl" : "rounded-md",
+              shape === s ? "border-primary bg-primary/10" : "border-border bg-card",
+            )}
+          >
+            <span className="text-sm font-black capitalize">{s}</span>
+            <span
+              className={cn(
+                "h-7 w-12 bg-primary",
+                s === "round" ? "rounded-full" : "rounded-[3px]",
+              )}
+            />
+          </SpecularButton>
+        ))}
       </div>
     </div>
   );
