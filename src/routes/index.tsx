@@ -35,7 +35,21 @@ function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/25 via-accent/40 to-background" />
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 md:grid-cols-2 md:items-center md:py-20">
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-70">
+          <ClientOnly>
+            <Ribbons
+              colors={fx.ribbons}
+              baseThickness={26}
+              speedMultiplier={0.5}
+              maxAge={480}
+              enableFade
+              enableShaderEffect
+            />
+          </ClientOnly>
+        </div>
+        <GradualBlur target="parent" position="bottom" height="5rem" strength={2} divCount={5} curve="bezier" opacity={1} />
+        <div className="relative mx-auto grid max-w-7xl gap-8 px-4 py-14 md:grid-cols-2 md:items-center md:py-20">
+
           <Reveal>
             <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-3 py-1 text-xs font-black uppercase tracking-wider text-primary">
               <Sparkles className="h-3 w-3" /> Fresh · Fast · Hygienic
