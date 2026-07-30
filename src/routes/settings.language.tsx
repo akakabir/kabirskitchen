@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { SettingsHeader, useLocal } from "@/components/SettingsBits";
 import { cn } from "@/lib/utils";
+import SpecularButton from "@/components/SpecularButton";
 
 export const Route = createFileRoute("/settings/language")({
   head: () => ({ meta: [{ title: "Language — Settings" }, { name: "description", content: "Pick your app language." }] }),
@@ -26,7 +27,7 @@ function LanguagePage() {
         {LANGS.map((l) => {
           const active = lang === l.id;
           return (
-            <button
+            <SpecularButton
               key={l.id}
               onClick={() => setLang(l.id)}
               className={cn(
@@ -43,7 +44,7 @@ function LanguagePage() {
                   <Check className="h-4 w-4" />
                 </span>
               )}
-            </button>
+            </SpecularButton>
           );
         })}
       </div>

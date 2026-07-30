@@ -8,6 +8,7 @@ import { DishCard, VegDot } from "@/components/DishCard";
 import { getItem, DESSERTS } from "@/lib/data";
 import { useCart, computeSelection, defaultSelection, type SelectedOptions } from "@/lib/cart-context";
 import { cn } from "@/lib/utils";
+import SpecularButton from "@/components/SpecularButton";
 
 export const Route = createFileRoute("/dessert/$id")({
   head: ({ params }) => {
@@ -108,7 +109,7 @@ function DessertDetail() {
                       ? sel[g.id] === c.id
                       : Array.isArray(sel[g.id]) && (sel[g.id] as string[]).includes(c.id);
                     return (
-                      <button
+                      <SpecularButton
                         key={c.id}
                         onClick={() => toggle(g.id, c.id, g.type)}
                         className={cn(
@@ -117,7 +118,7 @@ function DessertDetail() {
                         )}
                       >
                         {c.label}{c.priceDelta > 0 && ` +₹${c.priceDelta}`}
-                      </button>
+                      </SpecularButton>
                     );
                   })}
                 </div>
@@ -139,9 +140,9 @@ function DessertDetail() {
 
             <div className="mt-6 flex items-center gap-3">
               <div className="flex items-center gap-2 rounded-full border border-border px-2 py-1.5">
-                <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="grid h-7 w-7 place-items-center rounded-full hover:bg-secondary"><Minus className="h-3.5 w-3.5" /></button>
+                <SpecularButton onClick={() => setQty((q) => Math.max(1, q - 1))} className="grid h-7 w-7 place-items-center rounded-full hover:bg-secondary"><Minus className="h-3.5 w-3.5" /></SpecularButton>
                 <span className="w-6 text-center text-sm font-bold">{qty}</span>
-                <button onClick={() => setQty((q) => q + 1)} className="grid h-7 w-7 place-items-center rounded-full hover:bg-secondary"><Plus className="h-3.5 w-3.5" /></button>
+                <SpecularButton onClick={() => setQty((q) => q + 1)} className="grid h-7 w-7 place-items-center rounded-full hover:bg-secondary"><Plus className="h-3.5 w-3.5" /></SpecularButton>
               </div>
             </div>
           </div>
@@ -158,12 +159,12 @@ function DessertDetail() {
       </div>
 
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-background/95 p-3 backdrop-blur">
-        <button
+        <SpecularButton
           onClick={() => addLine(item.id, sel, unitPrice, finalLabel, qty)}
           className="mx-auto flex w-full max-w-4xl items-center justify-center rounded-full bg-primary py-3 text-sm font-black text-primary-foreground shadow-lg transition-transform hover:scale-[1.01] active:scale-95"
         >
           Add to Cart — ₹{unitPrice * qty}
-        </button>
+        </SpecularButton>
       </div>
 
       <Footer />

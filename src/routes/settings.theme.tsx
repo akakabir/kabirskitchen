@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { useTheme, THEMES } from "@/lib/theme-context";
 import { cn } from "@/lib/utils";
+import SpecularButton from "@/components/SpecularButton";
 
 export const Route = createFileRoute("/settings/theme")({
   head: () => ({
@@ -25,7 +26,7 @@ function ThemePage() {
         {THEMES.map((t) => {
           const active = theme === t.id;
           return (
-            <button
+            <SpecularButton
               key={t.id}
               onClick={() => setTheme(t.id)}
               data-theme={t.id}
@@ -53,7 +54,7 @@ function ThemePage() {
                 <span className="h-8 flex-1 rounded-lg" style={{ background: "var(--secondary)" }} />
                 <span className="h-8 flex-1 rounded-lg" style={{ background: "var(--card)", border: "1px solid var(--border)" }} />
               </div>
-            </button>
+            </SpecularButton>
           );
         })}
       </div>

@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { cn } from "@/lib/utils";
+import SpecularButton from "@/components/SpecularButton";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -85,7 +86,7 @@ function Help() {
         <Reveal>
           <div className="flex gap-2 overflow-x-auto no-scrollbar">
             {CATS.map((c) => (
-              <button
+              <SpecularButton
                 key={c}
                 onClick={() => setCat(c)}
                 className={cn(
@@ -94,7 +95,7 @@ function Help() {
                 )}
               >
                 {c}
-              </button>
+              </SpecularButton>
             ))}
           </div>
         </Reveal>
@@ -105,7 +106,7 @@ function Help() {
             return (
               <Reveal key={f.q} delay={i * 40}>
                 <div className="overflow-hidden rounded-2xl border border-border bg-card">
-                  <button
+                  <SpecularButton
                     onClick={() => setOpen(isOpen ? null : i)}
                     className="flex w-full items-center gap-3 px-4 py-4 text-left"
                     aria-expanded={isOpen}
@@ -113,7 +114,7 @@ function Help() {
                     <span className="hidden shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-primary sm:inline">{f.tag}</span>
                     <span className="min-w-0 flex-1 text-sm font-bold sm:text-base">{f.q}</span>
                     <ChevronDown className={cn("h-4 w-4 shrink-0 text-muted-foreground transition-transform", isOpen && "rotate-180")} />
-                  </button>
+                  </SpecularButton>
                   <div
                     className={cn(
                       "grid overflow-hidden px-4 transition-[grid-template-rows,padding] duration-300 ease-out",

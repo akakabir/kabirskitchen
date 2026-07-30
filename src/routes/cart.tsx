@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { useCart, getLineItem } from "@/lib/cart-context";
 import { VegDot } from "@/components/DishCard";
+import SpecularButton from "@/components/SpecularButton";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
@@ -58,15 +59,15 @@ function CartPage() {
                       <h3 className="truncate text-sm font-bold">{item.name}</h3>
                       {line.labelExtras && <p className="text-xs text-muted-foreground">{line.labelExtras}</p>}
                     </div>
-                    <button onClick={() => removeLine(line.lineId)} className="shrink-0 text-muted-foreground hover:text-primary" aria-label="Remove">
+                    <SpecularButton onClick={() => removeLine(line.lineId)} className="shrink-0 text-muted-foreground hover:text-primary" aria-label="Remove">
                       <Trash2 className="h-4 w-4" />
-                    </button>
+                    </SpecularButton>
                   </div>
                   <div className="mt-2 flex items-center justify-between">
                     <div className="flex items-center gap-2 rounded-full border border-border px-2 py-0.5">
-                      <button onClick={() => updateQty(line.lineId, line.qty - 1)} className="grid h-6 w-6 place-items-center rounded-full hover:bg-secondary"><Minus className="h-3 w-3" /></button>
+                      <SpecularButton onClick={() => updateQty(line.lineId, line.qty - 1)} className="grid h-6 w-6 place-items-center rounded-full hover:bg-secondary"><Minus className="h-3 w-3" /></SpecularButton>
                       <span className="w-5 text-center text-sm font-bold">{line.qty}</span>
-                      <button onClick={() => updateQty(line.lineId, line.qty + 1)} className="grid h-6 w-6 place-items-center rounded-full hover:bg-secondary"><Plus className="h-3 w-3" /></button>
+                      <SpecularButton onClick={() => updateQty(line.lineId, line.qty + 1)} className="grid h-6 w-6 place-items-center rounded-full hover:bg-secondary"><Plus className="h-3 w-3" /></SpecularButton>
                     </div>
                     <div className="text-sm font-black">₹{line.unitPrice * line.qty}</div>
                   </div>
