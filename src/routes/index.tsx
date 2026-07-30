@@ -6,6 +6,12 @@ import { StickyCartBar } from "@/components/StickyCartBar";
 import { DishCard } from "@/components/DishCard";
 import { Reveal } from "@/components/Reveal";
 import { ALL_ITEMS } from "@/lib/data";
+import { ClientOnly } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
+import GradualBlur from "@/components/GradualBlur";
+import { useThemeFx } from "@/lib/theme-context";
+
+const Ribbons = lazy(() => import("@/components/Ribbons"));
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,6 +33,7 @@ const categoryTiles = [
 ];
 
 function Home() {
+  const fx = useThemeFx();
   const trending = ALL_ITEMS.filter((i) => i.isSellingHot).slice(0, 10);
   return (
     <div className="min-h-screen bg-background">
@@ -37,6 +44,7 @@ function Home() {
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/25 via-accent/40 to-background" />
         <div className="pointer-events-none absolute inset-0 -z-10 opacity-70">
           <ClientOnly>
+            <Suspense fallback={null}>
             <Ribbons
               colors={fx.ribbons}
               baseThickness={26}
@@ -45,6 +53,7 @@ function Home() {
               enableFade
               enableShaderEffect
             />
+            </Suspense>
           </ClientOnly>
         </div>
         <GradualBlur target="parent" position="bottom" height="5rem" strength={2} divCount={5} curve="bezier" opacity={1} />
