@@ -20,12 +20,8 @@ const nav = [
   { to: "/selling-hot", label: "Selling Hot" },
 ];
 
-const aboutNav = [
-  { to: "/about", label: "About us" },
-  { to: "/hygiene", label: "How Orders Are Made" },
-  { to: "/help", label: "Help & FAQ" },
-  { to: "/contact", label: "Contact" },
-];
+
+
 
 export function Header({ showSearch, searchValue, onSearchChange }: Props) {
   const { count } = useCart();
