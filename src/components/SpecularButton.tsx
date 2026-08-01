@@ -238,12 +238,23 @@ export default function SpecularButton({
       };
       window.addEventListener("pointermove", onPointerMove);
 
-
+      let fadingOut = false;
       let angle = 2.4;
       let idleAngle = 2.4;
       let bright = 0;
       let last = performance.now();
       let raf = 0;
+
+      fadeRef.current = () => {
+        fadingOut = true;
+        proximityT = 0;
+        hovering = false;
+      };
+      hoverRef.current = () => {
+        fadingOut = false;
+        hovering = true;
+      };
+
 
       const lineC = new Color();
       const baseC = new Color();
