@@ -1,6 +1,6 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { MapPin, Search, ShoppingBag, Menu as MenuIcon, X, Settings, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/lib/cart-context";
 import { useLocation } from "@/lib/location-context";
 import { cn } from "@/lib/utils";
@@ -17,90 +17,140 @@ const nav = [
   { to: "/desserts", label: "Desserts" },
   { to: "/deals/50", label: "₹50 Only" },
   { to: "/deals/99", label: "₹99 Only" },
-  { to: "/selling-hot", label: "🔥 Selling Hot" },
-  { to: "/hygiene", label: "Hygiene" },
-  { to: "/help", label: "Help" },
+  { to: "/selling-hot", label: "Selling Hot" },
+];
+
+const aboutNav = [
+  { to: "/about", label: "About us" },
+  { to: "/hygiene", label: "How Orders Are Made" },
+  { to: "/help", label: "Help & FAQ" },
+  { to: "/contact", label: "Contact" },
 ];
 
 export function Header({ showSearch, searchValue, onSearchChange }: Props) {
   const { count } = useCart();
   const { selected, openPicker } = useLocation();
   const [open, setOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const aboutRef = useRef<HTMLDivElement>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!aboutOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (!aboutRef.current?.contains(e.target as Node)) setAboutOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [aboutOpen]);
+
+  const aboutActive = aboutNav.some((n) => path.startsWith(n.to));
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3">
+      <div className="mx-auto flex w-full max-w-7xl items-center gap-4 px-4 py-3 xl:gap-6">
         <Link to="/" className="flex shrink-0 items-center gap-2">
           <div className="grid h-9 w-9 place-items-center rounded-2xl bg-primary text-primary-foreground text-lg font-black">K</div>
           <span className="hidden text-lg font-black tracking-tight sm:inline">Kabir's Kitchen</span>
         </Link>
 
-        <SpecularButton
-          onClick={() => openPicker()}
-          className="hidden max-w-[220px] items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5 text-xs transition-colors hover:border-primary hover:text-primary md:flex"
-        >
-          <MapPin className="h-3.5 w-3.5 shrink-0 text-primary" />
-          <span className="font-semibold shrink-0">Deliver to</span>
-          <span className="truncate text-muted-foreground">{selected?.formatted || "Set location"}</span>
-          <ChevronDown className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-        </SpecularButton>
-
-        {showSearch && (
-          <div className="relative hidden max-w-md flex-1 md:block">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              value={searchValue ?? ""}
-              onChange={(e) => onSearchChange?.(e.target.value)}
-              placeholder="Search for biryani, pizza, kunafa…"
-              className="w-full rounded-full border border-border bg-secondary py-2 pl-9 pr-4 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
-        )}
-
-        <nav className="ml-auto hidden items-center gap-1 lg:flex">
+        <nav className="hidden shrink-0 items-center gap-1.5 lg:flex xl:gap-2">
           {nav.map((n) => (
-            <Link
+            <SpecularButton
               key={n.to}
-              to={n.to}
+              onClick={() => navigate({ to: n.to })}
               className={cn(
-                "rounded-full px-3 py-1.5 text-sm font-semibold transition-colors",
+                "whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-semibold transition-colors",
                 path.startsWith(n.to) ? "bg-primary text-primary-foreground" : "hover:bg-secondary",
               )}
             >
               {n.label}
-            </Link>
+            </SpecularButton>
           ))}
+
+          <div className="relative" ref={aboutRef}>
+            <SpecularButton
+              onClick={() => setAboutOpen((v) => !v)}
+              className={cn(
+                "flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-semibold transition-colors",
+                aboutActive ? "bg-primary text-primary-foreground" : "hover:bg-secondary",
+              )}
+            >
+              About <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", aboutOpen && "rotate-180")} />
+            </SpecularButton>
+            {aboutOpen && (
+              <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-border bg-popover p-1.5 shadow-xl">
+                {aboutNav.map((n) => (
+                  <Link
+                    key={n.to}
+                    to={n.to}
+                    onClick={() => setAboutOpen(false)}
+                    className="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-secondary"
+                  >
+                    {n.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </nav>
 
-        <Link
-          to="/settings"
-          aria-label="Settings"
-          className={cn(
-            "ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border bg-secondary transition-colors hover:border-primary hover:text-primary lg:ml-0",
-            path.startsWith("/settings") && "border-primary text-primary",
+        <div className="ml-auto flex items-center gap-3">
+          <SpecularButton
+            onClick={() => openPicker()}
+            className="hidden max-w-[200px] items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5 text-xs transition-colors hover:border-primary hover:text-primary xl:flex"
+          >
+            <MapPin className="h-3.5 w-3.5 shrink-0 text-primary" />
+            <span className="shrink-0 font-semibold">Deliver to</span>
+            <span className="truncate text-muted-foreground">{selected?.formatted || "Set location"}</span>
+          </SpecularButton>
+
+          {showSearch && (
+            <div className="relative hidden w-56 md:block xl:w-64">
+              <input
+                value={searchValue ?? ""}
+                onChange={(e) => onSearchChange?.(e.target.value)}
+                placeholder="Search dishes…"
+                className="w-full rounded-full border border-border bg-secondary py-2 pl-4 pr-11 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+              <SpecularButton
+                aria-label="Search"
+                className="absolute right-1 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-primary text-primary-foreground"
+              >
+                <Search className="h-4 w-4" />
+              </SpecularButton>
+            </div>
           )}
-        >
-          <Settings className="h-4 w-4" />
-        </Link>
 
-        <Link
-          to="/cart"
-          className="relative flex shrink-0 items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-sm transition-transform hover:scale-105"
-        >
-          <ShoppingBag className="h-4 w-4" />
-          <span>Cart</span>
-          {count > 0 && (
-            <span key={count} className="animate-pop grid h-5 min-w-5 place-items-center rounded-full bg-background px-1 text-[11px] font-black text-foreground">
-              {count}
-            </span>
-          )}
-        </Link>
+          <SpecularButton
+            onClick={() => navigate({ to: "/settings" })}
+            aria-label="Settings"
+            className={cn(
+              "grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border bg-secondary transition-colors hover:border-primary hover:text-primary",
+              path.startsWith("/settings") && "border-primary text-primary",
+            )}
+          >
+            <Settings className="h-4 w-4" />
+          </SpecularButton>
 
+          <SpecularButton
+            onClick={() => navigate({ to: "/cart" })}
+            className="relative flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-sm transition-transform hover:scale-105"
+          >
+            <ShoppingBag className="h-4 w-4" />
+            <span className="hidden sm:inline">Cart</span>
+            {count > 0 && (
+              <span key={count} className="animate-pop grid h-5 min-w-5 place-items-center rounded-full bg-background px-1 text-[11px] font-black text-foreground">
+                {count}
+              </span>
+            )}
+          </SpecularButton>
 
-        <SpecularButton className="lg:hidden" onClick={() => setOpen((v) => !v)} aria-label="Menu">
-          {open ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
-        </SpecularButton>
+          <SpecularButton className="lg:hidden" onClick={() => setOpen((v) => !v)} aria-label="Menu">
+            {open ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
+          </SpecularButton>
+        </div>
       </div>
 
       {showSearch && (
@@ -129,7 +179,7 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
             <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
           </SpecularButton>
           <div className="flex flex-wrap gap-2">
-            {nav.concat([{ to: "/about", label: "About" }, { to: "/contact", label: "Contact" }, { to: "/settings", label: "Settings" }]).map((n) => (
+            {nav.concat(aboutNav).concat([{ to: "/settings", label: "Settings" }]).map((n) => (
               <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="rounded-full bg-secondary px-3 py-1.5 text-sm font-semibold">
                 {n.label}
               </Link>
