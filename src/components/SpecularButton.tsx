@@ -302,6 +302,11 @@ export default function SpecularButton({
         program.uniforms.uShineFade.value = (p.shineFade * Math.PI) / 180;
         program.uniforms.uThickness.value = p.thickness * dpr;
         renderer.render({ scene: mesh });
+
+        if (fadingOut && bright < 0.004) {
+          // fully faded out — safe to release the GL context without a visual pop
+          disposeRef.current?.();
+        }
       };
       raf = requestAnimationFrame(update);
 
