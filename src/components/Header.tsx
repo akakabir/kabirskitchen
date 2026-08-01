@@ -31,21 +31,9 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
   const { count } = useCart();
   const { selected, openPicker } = useLocation();
   const [open, setOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const aboutRef = useRef<HTMLDivElement>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!aboutOpen) return;
-    const onDown = (e: MouseEvent) => {
-      if (!aboutRef.current?.contains(e.target as Node)) setAboutOpen(false);
-    };
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
-  }, [aboutOpen]);
-
-  const aboutActive = aboutNav.some((n) => path.startsWith(n.to));
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
