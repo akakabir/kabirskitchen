@@ -127,6 +127,8 @@ export default function SpecularButton({
   const fxRef = useRef<HTMLSpanElement>(null);
   const propsRef = useRef<Record<string, unknown>>({});
   const disposeRef = useRef<(() => void) | null>(null);
+  const fadeRef = useRef<(() => void) | null>(null);
+  const hoverRef = useRef<(() => void) | null>(null);
 
   const resolvedLine = lineColor ?? fx.line;
   const resolvedBase = baseColor ?? fx.base;
