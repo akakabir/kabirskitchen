@@ -317,17 +317,18 @@ export default function SpecularButton({
         if (gl.canvas.parentNode === host) host.removeChild(gl.canvas);
         gl.getExtension("WEBGL_lose_context")?.loseContext();
         disposeRef.current = null;
+        fadeRef.current = null;
+        hoverRef.current = null;
       };
     };
 
-    let idle: ReturnType<typeof setTimeout> | null = null;
     const wake = () => {
-      if (idle) { clearTimeout(idle); idle = null; }
       start();
+      hoverRef.current?.();
     };
     const sleep = () => {
-      if (idle) clearTimeout(idle);
-      idle = setTimeout(() => disposeRef.current?.(), 700);
+      // fade to zero first; the render loop disposes itself once dark
+      fadeRef.current?.();
     };
 
     btn.addEventListener("pointerenter", wake);
