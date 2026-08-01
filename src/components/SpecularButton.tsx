@@ -340,7 +340,7 @@ export default function SpecularButton({
 
     return () => {
       mounted = false;
-      if (idle) clearTimeout(idle);
+      
       btn.removeEventListener("pointerenter", wake);
       btn.removeEventListener("focus", wake);
       btn.removeEventListener("pointerleave", sleep);
