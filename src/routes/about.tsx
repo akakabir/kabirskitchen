@@ -28,7 +28,32 @@ function About() {
           <p>We're delivery-only by design. Fewer distractions, sharper focus on cooking. Every dish leaves the kitchen sealed, hot, and made-to-order — never re-heated.</p>
           <p>Our small team includes a head chef, a pastry lead, four line cooks, and a delivery ops crew that obsesses over hitting our 30-minute promise.</p>
         </div>
+
+        <h2 className="mt-12 text-2xl font-black">More about us</h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          {[
+            { to: "/hygiene", icon: ChefHat, title: "How Our Orders Are Made", desc: "Our kitchen, hygiene and packing standards." },
+            { to: "/help", icon: LifeBuoy, title: "Help & FAQ", desc: "Payments, customization, delivery area, allergens." },
+            { to: "/contact", icon: Mail, title: "Contact", desc: "Reach the team for anything else." },
+            { to: "/terms", icon: ScrollText, title: "Terms & Conditions", desc: "The fine print, in plain language." },
+          ].map((c) => (
+            <Link
+              key={c.to}
+              to={c.to}
+              className="group flex items-start gap-3 rounded-3xl border border-border bg-card p-5 transition-transform hover:-translate-y-0.5 hover:border-primary"
+            >
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-primary/15 text-primary">
+                <c.icon className="h-5 w-5" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-base font-black group-hover:text-primary">{c.title}</span>
+                <span className="block text-sm text-muted-foreground">{c.desc}</span>
+              </span>
+            </Link>
+          ))}
+        </div>
       </div>
+
       <Footer />
     </div>
   );
