@@ -68,32 +68,6 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
               {n.label}
             </SpecularButton>
           ))}
-
-          <div className="relative" ref={aboutRef}>
-            <SpecularButton
-              onClick={() => setAboutOpen((v) => !v)}
-              className={cn(
-                "flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-semibold transition-colors",
-                aboutActive ? "bg-primary text-primary-foreground" : "hover:bg-secondary",
-              )}
-            >
-              About <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", aboutOpen && "rotate-180")} />
-            </SpecularButton>
-            {aboutOpen && (
-              <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-border bg-popover p-1.5 shadow-xl">
-                {aboutNav.map((n) => (
-                  <Link
-                    key={n.to}
-                    to={n.to}
-                    onClick={() => setAboutOpen(false)}
-                    className="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-secondary"
-                  >
-                    {n.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
         </nav>
 
         <div className="ml-auto flex items-center gap-3">

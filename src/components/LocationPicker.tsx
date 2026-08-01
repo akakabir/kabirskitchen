@@ -139,7 +139,13 @@ function PickerInner({
     );
   };
 
-  const canSave = draft.formatted.trim() && draft.house.trim();
+  // Make sure the pin always has a resolved address, even before the user touches the map.
+  useEffect(() => {
+    if (!draft.formatted) void setPoint(draft.lat, draft.lng);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const canSave = Boolean(draft.formatted.trim()) && !reversing;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-stretch justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4">
