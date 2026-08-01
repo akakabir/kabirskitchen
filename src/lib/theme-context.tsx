@@ -28,24 +28,18 @@ export const THEME_FX: Record<
 interface Ctx {
   theme: ThemeName;
   setTheme: (t: ThemeName) => void;
-  shape: ShapeName;
-  setShape: (s: ShapeName) => void;
 }
-const ThemeCtx = createContext<Ctx>({ theme: "light", setTheme: () => {}, shape: "round", setShape: () => {} });
+const ThemeCtx = createContext<Ctx>({ theme: "light", setTheme: () => {} });
 
 const KEY = "kk_theme";
-const SHAPE_KEY = "kk_shape";
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<ThemeName>("light");
-  const [shape, setShapeState] = useState<ShapeName>("round");
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem(KEY) as ThemeName | null;
       if (saved) setThemeState(saved);
-      const savedShape = localStorage.getItem(SHAPE_KEY) as ShapeName | null;
-      if (savedShape === "round" || savedShape === "square") setShapeState(savedShape);
     } catch {}
   }, []);
 
@@ -53,32 +47,21 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-shape", shape);
-  }, [shape]);
-
   const setTheme = (t: ThemeName) => {
     setThemeState(t);
     try { localStorage.setItem(KEY, t); } catch {}
   };
 
-  const setShape = (s: ShapeName) => {
-    setShapeState(s);
-    try { localStorage.setItem(SHAPE_KEY, s); } catch {}
-  };
-
-  const value = useMemo(() => ({ theme, setTheme, shape, setShape }), [theme, shape]);
+  const value = useMemo(() => ({ theme, setTheme }), [theme]);
 
   return <ThemeCtx.Provider value={value}>{children}</ThemeCtx.Provider>;
 }
 
 export const useTheme = () => useContext(ThemeCtx);
 
-/** Accent colors + button radius for the currently active theme/shape. */
+/** Accent colors + button radius for the currently active theme. */
 export function useThemeFx() {
-  const { theme, shape } = useTheme();
-  return useMemo(
-    () => ({ ...THEME_FX[theme] ?? THEME_FX.light, radius: shape === "square" ? 2 : 18 }),
-    [theme, shape],
-  );
+  const { theme } = useTheme();
+  return useMemo(() => ({ ...(THEME_FX[theme] ?? THEME_FX.light), radius: 18 }), [theme]);
 }
+
