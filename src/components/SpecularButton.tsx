@@ -48,18 +48,18 @@ void main() {
   float d = shapeSDF(p);
   vec2 L = vec2(cos(uAngle), sin(uAngle));
 
-  float base = (1.0 - smoothstep(0.0, uBaseWidth, abs(d))) * 0.45;
+  float base = (1.0 - smoothstep(0.0, uBaseWidth, abs(d))) * 0.35;
 
   vec2 nEll = normalize(p / (uHalfSize * uHalfSize) + 1e-6);
   float phi = acos(clamp(abs(dot(nEll, L)), 0.0, 1.0));
   float rim = 1.0 - smoothstep(uShineSize - uShineFade, uShineSize + uShineFade + 1e-4, phi);
-  float line = gaussianLine(d, uThickness);
+  float line = clamp(gaussianLine(d, uThickness), 0.0, 1.0);
   float edgeClamp = 1.0 - smoothstep(0.5 * uPx, 3.0 * uPx, abs(d));
-  float hi = line * rim * edgeClamp * uIntensity;
+  float hi = clamp(line * rim * edgeClamp * uIntensity, 0.0, 0.85);
 
-  vec3 col = uBaseColor * base + uLineColor * hi;
-  float a = clamp(base + hi, 0.0, 1.0);
-  fragColor = vec4(col, a);
+  vec3 col = clamp(uBaseColor * base + uLineColor * hi, 0.0, 1.0);
+  float a = clamp(base + hi, 0.0, 0.9);
+  fragColor = vec4(col * a, a);
 }
 `;
 
