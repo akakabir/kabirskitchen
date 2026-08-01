@@ -74,14 +74,16 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
                 value={searchValue ?? ""}
                 onChange={(e) => onSearchChange?.(e.target.value)}
                 placeholder="Search dishes…"
-                className="w-full rounded-full border border-border bg-secondary py-2 pl-4 pr-11 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                className="h-10 w-full rounded-full border border-border bg-secondary py-2 pl-4 pr-12 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
-              <SpecularButton
-                aria-label="Search"
-                className="absolute right-1 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-primary text-primary-foreground"
-              >
-                <Search className="h-4 w-4" />
-              </SpecularButton>
+              <span className="pointer-events-none absolute inset-y-0 right-1 flex items-center">
+                <SpecularButton
+                  aria-label="Search"
+                  className="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground"
+                >
+                  <Search className="h-4 w-4" />
+                </SpecularButton>
+              </span>
             </div>
           )}
 
