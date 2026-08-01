@@ -217,6 +217,7 @@ export default function SpecularButton({
 
       let pointerAngle: number | null = null;
       let proximityT = 0;
+      let hovering = false;
       const onPointerMove = (e: PointerEvent) => {
         const rect = btn.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
@@ -236,6 +237,7 @@ export default function SpecularButton({
         proximityT = t * t * (3 - 2 * t);
       };
       window.addEventListener("pointermove", onPointerMove);
+
 
       let angle = 2.4;
       let idleAngle = 2.4;
