@@ -284,7 +284,8 @@ export default function SpecularButton({
         const diff = ((target - angle + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
         angle += diff * (1 - Math.exp(-dt * 7));
 
-        const brightTarget = Math.min(Math.max(p.autoAnimate ? 1 : proximityT, 0), 1);
+        const rawTarget = fadingOut ? 0 : p.autoAnimate ? 1 : hovering ? Math.max(proximityT, 0) : 0;
+        const brightTarget = Math.min(Math.max(rawTarget, 0), 1);
         bright += (brightTarget - bright) * (1 - Math.exp(-dt * 8));
         bright = Math.min(Math.max(bright, 0), 1);
 
@@ -296,7 +297,7 @@ export default function SpecularButton({
           Math.min(r, Math.min(sizeRef.w, sizeRef.h) / 2) * dpr;
         program.uniforms.uLineColor.value = [lineC.r, lineC.g, lineC.b];
         program.uniforms.uBaseColor.value = [baseC.r, baseC.g, baseC.b];
-        program.uniforms.uIntensity.value = Math.min(Math.max(p.intensity, 0), 1.2) * bright;
+        program.uniforms.uIntensity.value = Math.min(Math.max(p.intensity * bright, 0), 1);
         program.uniforms.uShineSize.value = (p.shineSize * Math.PI) / 180;
         program.uniforms.uShineFade.value = (p.shineFade * Math.PI) / 180;
         program.uniforms.uThickness.value = p.thickness * dpr;
