@@ -166,7 +166,7 @@ function PickerInner({
               className="w-full rounded-full border border-border bg-secondary py-2.5 pl-10 pr-4 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
             {(results.length > 0 || searching) && (
-              <div className="absolute left-5 right-5 z-20 mt-1 max-h-64 overflow-y-auto rounded-2xl border border-border bg-popover shadow-xl">
+              <div className="absolute left-5 right-5 z-20 mt-1 max-h-[200px] overflow-y-auto overscroll-contain rounded-2xl border border-border bg-popover shadow-xl">
                 {searching && (
                   <div className="flex items-center gap-2 px-4 py-2 text-xs text-muted-foreground">
                     <Loader2 className="h-3.5 w-3.5 animate-spin" /> Searching…
@@ -363,5 +363,5 @@ function LeafletMap({
     mapRef.current.setView([lat, lng], Math.max(mapRef.current.getZoom(), 15));
   }, [lat, lng]);
 
-  return <div ref={elRef} className="h-64 w-full overflow-hidden rounded-2xl border border-border sm:h-72" />;
+  return <div ref={elRef} className="h-[280px] w-full overflow-hidden rounded-2xl border border-border sm:h-[400px]" />;
 }
