@@ -143,7 +143,7 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
             <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
           </SpecularButton>
           <div className="flex flex-wrap gap-2">
-            {nav.concat(aboutNav).concat([{ to: "/settings", label: "Settings" }]).map((n) => (
+            {nav.concat([{ to: "/settings", label: "Settings" }]).map((n) => (
               <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="rounded-full bg-secondary px-3 py-1.5 text-sm font-semibold">
                 {n.label}
               </Link>
