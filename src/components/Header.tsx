@@ -1,6 +1,6 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { MapPin, Search, ShoppingBag, Menu as MenuIcon, X, Settings, ChevronDown } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
 import { useLocation } from "@/lib/location-context";
 import { cn } from "@/lib/utils";
@@ -20,32 +20,16 @@ const nav = [
   { to: "/selling-hot", label: "Selling Hot" },
 ];
 
-const aboutNav = [
-  { to: "/about", label: "About us" },
-  { to: "/hygiene", label: "How Orders Are Made" },
-  { to: "/help", label: "Help & FAQ" },
-  { to: "/contact", label: "Contact" },
-];
+
+
 
 export function Header({ showSearch, searchValue, onSearchChange }: Props) {
   const { count } = useCart();
   const { selected, openPicker } = useLocation();
   const [open, setOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const aboutRef = useRef<HTMLDivElement>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!aboutOpen) return;
-    const onDown = (e: MouseEvent) => {
-      if (!aboutRef.current?.contains(e.target as Node)) setAboutOpen(false);
-    };
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
-  }, [aboutOpen]);
-
-  const aboutActive = aboutNav.some((n) => path.startsWith(n.to));
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
@@ -68,32 +52,6 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
               {n.label}
             </SpecularButton>
           ))}
-
-          <div className="relative" ref={aboutRef}>
-            <SpecularButton
-              onClick={() => setAboutOpen((v) => !v)}
-              className={cn(
-                "flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-semibold transition-colors",
-                aboutActive ? "bg-primary text-primary-foreground" : "hover:bg-secondary",
-              )}
-            >
-              About <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", aboutOpen && "rotate-180")} />
-            </SpecularButton>
-            {aboutOpen && (
-              <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-border bg-popover p-1.5 shadow-xl">
-                {aboutNav.map((n) => (
-                  <Link
-                    key={n.to}
-                    to={n.to}
-                    onClick={() => setAboutOpen(false)}
-                    className="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-secondary"
-                  >
-                    {n.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
         </nav>
 
         <div className="ml-auto flex items-center gap-3">
@@ -112,14 +70,16 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
                 value={searchValue ?? ""}
                 onChange={(e) => onSearchChange?.(e.target.value)}
                 placeholder="Search dishes…"
-                className="w-full rounded-full border border-border bg-secondary py-2 pl-4 pr-11 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                className="h-10 w-full rounded-full border border-border bg-secondary py-2 pl-4 pr-12 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
-              <SpecularButton
-                aria-label="Search"
-                className="absolute right-1 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-primary text-primary-foreground"
-              >
-                <Search className="h-4 w-4" />
-              </SpecularButton>
+              <span className="pointer-events-none absolute inset-y-0 right-1 flex items-center">
+                <SpecularButton
+                  aria-label="Search"
+                  className="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground"
+                >
+                  <Search className="h-4 w-4" />
+                </SpecularButton>
+              </span>
             </div>
           )}
 
@@ -179,7 +139,7 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
             <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
           </SpecularButton>
           <div className="flex flex-wrap gap-2">
-            {nav.concat(aboutNav).concat([{ to: "/settings", label: "Settings" }]).map((n) => (
+            {nav.concat([{ to: "/settings", label: "Settings" }]).map((n) => (
               <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="rounded-full bg-secondary px-3 py-1.5 text-sm font-semibold">
                 {n.label}
               </Link>

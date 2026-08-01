@@ -48,17 +48,18 @@ void main() {
   float d = shapeSDF(p);
   vec2 L = vec2(cos(uAngle), sin(uAngle));
 
-  float base = (1.0 - smoothstep(0.0, uBaseWidth, abs(d))) * 0.35;
+  float amt = clamp(uIntensity, 0.0, 1.0);
+  float base = (1.0 - smoothstep(0.0, uBaseWidth, abs(d))) * 0.30 * amt;
 
   vec2 nEll = normalize(p / (uHalfSize * uHalfSize) + 1e-6);
   float phi = acos(clamp(abs(dot(nEll, L)), 0.0, 1.0));
   float rim = 1.0 - smoothstep(uShineSize - uShineFade, uShineSize + uShineFade + 1e-4, phi);
   float line = clamp(gaussianLine(d, uThickness), 0.0, 1.0);
   float edgeClamp = 1.0 - smoothstep(0.5 * uPx, 3.0 * uPx, abs(d));
-  float hi = clamp(line * rim * edgeClamp * uIntensity, 0.0, 0.85);
+  float hi = clamp(line * rim * edgeClamp * amt, 0.0, 0.6);
 
   vec3 col = clamp(uBaseColor * base + uLineColor * hi, 0.0, 1.0);
-  float a = clamp(base + hi, 0.0, 0.9);
+  float a = clamp(base + hi, 0.0, 0.7);
   fragColor = vec4(col * a, a);
 }
 `;
@@ -127,6 +128,8 @@ export default function SpecularButton({
   const fxRef = useRef<HTMLSpanElement>(null);
   const propsRef = useRef<Record<string, unknown>>({});
   const disposeRef = useRef<(() => void) | null>(null);
+  const fadeRef = useRef<(() => void) | null>(null);
+  const hoverRef = useRef<(() => void) | null>(null);
 
   const resolvedLine = lineColor ?? fx.line;
   const resolvedBase = baseColor ?? fx.base;
@@ -217,6 +220,7 @@ export default function SpecularButton({
 
       let pointerAngle: number | null = null;
       let proximityT = 0;
+      let hovering = false;
       const onPointerMove = (e: PointerEvent) => {
         const rect = btn.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
@@ -237,11 +241,23 @@ export default function SpecularButton({
       };
       window.addEventListener("pointermove", onPointerMove);
 
+      let fadingOut = false;
       let angle = 2.4;
       let idleAngle = 2.4;
       let bright = 0;
       let last = performance.now();
       let raf = 0;
+
+      fadeRef.current = () => {
+        fadingOut = true;
+        proximityT = 0;
+        hovering = false;
+      };
+      hoverRef.current = () => {
+        fadingOut = false;
+        hovering = true;
+      };
+
 
       const lineC = new Color();
       const baseC = new Color();
@@ -269,7 +285,8 @@ export default function SpecularButton({
         const diff = ((target - angle + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
         angle += diff * (1 - Math.exp(-dt * 7));
 
-        const brightTarget = Math.min(Math.max(p.autoAnimate ? 1 : proximityT, 0), 1);
+        const rawTarget = fadingOut ? 0 : p.autoAnimate ? 1 : hovering ? Math.max(proximityT, 0) : 0;
+        const brightTarget = Math.min(Math.max(rawTarget, 0), 1);
         bright += (brightTarget - bright) * (1 - Math.exp(-dt * 8));
         bright = Math.min(Math.max(bright, 0), 1);
 
@@ -281,11 +298,16 @@ export default function SpecularButton({
           Math.min(r, Math.min(sizeRef.w, sizeRef.h) / 2) * dpr;
         program.uniforms.uLineColor.value = [lineC.r, lineC.g, lineC.b];
         program.uniforms.uBaseColor.value = [baseC.r, baseC.g, baseC.b];
-        program.uniforms.uIntensity.value = Math.min(Math.max(p.intensity, 0), 1.2) * bright;
+        program.uniforms.uIntensity.value = Math.min(Math.max(p.intensity * bright, 0), 1);
         program.uniforms.uShineSize.value = (p.shineSize * Math.PI) / 180;
         program.uniforms.uShineFade.value = (p.shineFade * Math.PI) / 180;
         program.uniforms.uThickness.value = p.thickness * dpr;
         renderer.render({ scene: mesh });
+
+        if (fadingOut && bright < 0.004) {
+          // fully faded out — safe to release the GL context without a visual pop
+          disposeRef.current?.();
+        }
       };
       raf = requestAnimationFrame(update);
 
@@ -296,17 +318,18 @@ export default function SpecularButton({
         if (gl.canvas.parentNode === host) host.removeChild(gl.canvas);
         gl.getExtension("WEBGL_lose_context")?.loseContext();
         disposeRef.current = null;
+        fadeRef.current = null;
+        hoverRef.current = null;
       };
     };
 
-    let idle: ReturnType<typeof setTimeout> | null = null;
     const wake = () => {
-      if (idle) { clearTimeout(idle); idle = null; }
       start();
+      hoverRef.current?.();
     };
     const sleep = () => {
-      if (idle) clearTimeout(idle);
-      idle = setTimeout(() => disposeRef.current?.(), 700);
+      // fade to zero first; the render loop disposes itself once dark
+      fadeRef.current?.();
     };
 
     btn.addEventListener("pointerenter", wake);
@@ -318,7 +341,7 @@ export default function SpecularButton({
 
     return () => {
       mounted = false;
-      if (idle) clearTimeout(idle);
+      
       btn.removeEventListener("pointerenter", wake);
       btn.removeEventListener("focus", wake);
       btn.removeEventListener("pointerleave", sleep);
