@@ -1,6 +1,6 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { MapPin, Search, ShoppingBag, Menu as MenuIcon, X, Settings, ChevronDown } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
 import { useLocation } from "@/lib/location-context";
 import { cn } from "@/lib/utils";
