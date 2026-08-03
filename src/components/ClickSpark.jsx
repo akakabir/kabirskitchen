@@ -2,7 +2,8 @@ import { useRef, useEffect } from 'react';
 
 const EMOJIS = ['🍕', '🍔', '🍟', '🍿', '🌭', '🧇', '🌮', '🍙', '🍩', '🍫', '🍰'];
 const GRAVITY = 0.35;
-const EMOJI_COUNT = 6;
+const EMOJI_COUNT = 4;
+const MAX_EMOJIS = 12;
 
 const ClickSpark = () => {
   const canvasRef = useRef(null);
