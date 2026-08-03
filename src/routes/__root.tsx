@@ -106,15 +106,6 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-function ThemedSpark({ children }: { children: ReactNode }) {
-  const fx = useThemeFx();
-  return (
-    <ClickSpark sparkColor={fx.spark} sparkSize={10} sparkRadius={18} sparkCount={8} duration={420}>
-      {children}
-    </ClickSpark>
-  );
-}
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
@@ -122,13 +113,13 @@ function RootComponent() {
       <ThemeProvider>
         <LocationProvider>
           <CartProvider>
-            <ThemedSpark>
-              <Outlet />
-              <LocationPicker />
-            </ThemedSpark>
+            <ClickSpark />
+            <Outlet />
+            <LocationPicker />
           </CartProvider>
         </LocationProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
 }
+
