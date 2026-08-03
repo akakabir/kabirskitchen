@@ -23,6 +23,9 @@ const ClickSpark = () => {
     const handleClick = (e) => {
       const x = e.clientX;
       const y = e.clientY;
+      while (sparksRef.current.length + EMOJI_COUNT > MAX_EMOJIS && sparksRef.current.length > 0) {
+        sparksRef.current.splice(Math.floor(Math.random() * sparksRef.current.length), 1);
+      }
       for (let i = 0; i < EMOJI_COUNT; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = 3 + Math.random() * 4;
