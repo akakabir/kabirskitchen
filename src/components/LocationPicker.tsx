@@ -207,7 +207,7 @@ function PickerInner({
           </div>
 
           {/* Map */}
-          <div className="px-5 pt-4">
+          <div className="relative z-0 px-5 pt-4">
             <LeafletMap
               lat={draft.lat}
               lng={draft.lng}
