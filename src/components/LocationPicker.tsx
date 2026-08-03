@@ -162,8 +162,10 @@ function PickerInner({
 
         <div className="flex-1 overflow-y-auto">
           {/* Search */}
-          <div className="relative px-5 pt-4">
-            <Search className="pointer-events-none absolute left-8 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <div className="relative z-[1000] px-5 pt-4">
+            <div className="pointer-events-none absolute inset-y-0 left-8 flex items-center pt-4">
+              <Search className="h-4 w-4 text-muted-foreground" />
+            </div>
             <input
               autoFocus
               value={query}
@@ -172,7 +174,7 @@ function PickerInner({
               className="w-full rounded-full border border-border bg-secondary py-2.5 pl-10 pr-4 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
             {(results.length > 0 || searching) && (
-              <div className="absolute left-5 right-5 z-20 mt-1 max-h-[200px] overflow-y-auto overscroll-contain rounded-2xl border border-border bg-popover shadow-xl">
+              <div className="absolute left-5 right-5 z-[1001] mt-1 max-h-[200px] overflow-y-auto overscroll-contain rounded-2xl border border-border bg-popover shadow-xl">
                 {searching && (
                   <div className="flex items-center gap-2 px-4 py-2 text-xs text-muted-foreground">
                     <Loader2 className="h-3.5 w-3.5 animate-spin" /> Searching…
@@ -205,7 +207,7 @@ function PickerInner({
           </div>
 
           {/* Map */}
-          <div className="px-5 pt-4">
+          <div className="relative z-0 px-5 pt-4">
             <LeafletMap
               lat={draft.lat}
               lng={draft.lng}
