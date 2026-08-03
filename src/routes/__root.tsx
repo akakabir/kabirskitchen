@@ -11,7 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { ThemeProvider, useThemeFx } from "@/lib/theme-context";
+import { ThemeProvider } from "@/lib/theme-context";
 import ClickSpark from "@/components/ClickSpark";
 import { CartProvider } from "@/lib/cart-context";
 import { LocationProvider } from "@/lib/location-context";
