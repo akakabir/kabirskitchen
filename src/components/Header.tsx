@@ -26,7 +26,7 @@ const nav = [
 export function Header({ showSearch, searchValue, onSearchChange }: Props) {
   const { count } = useCart();
   const { selected, openPicker } = useLocation();
-  const [open, setOpen] = useState(false);
+  
   const path = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
 
