@@ -107,9 +107,6 @@ export function Header({ showSearch, searchValue, onSearchChange }: Props) {
             )}
           </SpecularButton>
 
-          <SpecularButton className="lg:hidden" onClick={() => setOpen((v) => !v)} aria-label="Menu">
-            {open ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
-          </SpecularButton>
         </div>
       </div>
 
