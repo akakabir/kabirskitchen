@@ -57,14 +57,10 @@ const ClickSpark = () => {
           return false;
         }
 
-        ctx.save();
-        ctx.translate(spark.x, spark.y);
-        ctx.rotate(spark.rotation);
         ctx.font = `${spark.size}px sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(spark.emoji, 0, 0);
-        ctx.restore();
+        ctx.fillText(spark.emoji, spark.x, spark.y);
 
         return true;
       });
