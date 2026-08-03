@@ -2,7 +2,8 @@ import { useRef, useEffect } from 'react';
 
 const EMOJIS = ['🍕', '🍔', '🍟', '🍿', '🌭', '🧇', '🌮', '🍙', '🍩', '🍫', '🍰'];
 const GRAVITY = 0.35;
-const EMOJI_COUNT = 6;
+const EMOJI_COUNT = 4;
+const MAX_EMOJIS = 12;
 
 const ClickSpark = () => {
   const canvasRef = useRef(null);
@@ -22,6 +23,9 @@ const ClickSpark = () => {
     const handleClick = (e) => {
       const x = e.clientX;
       const y = e.clientY;
+      while (sparksRef.current.length + EMOJI_COUNT > MAX_EMOJIS && sparksRef.current.length > 0) {
+        sparksRef.current.splice(Math.floor(Math.random() * sparksRef.current.length), 1);
+      }
       for (let i = 0; i < EMOJI_COUNT; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = 3 + Math.random() * 4;
@@ -53,14 +57,10 @@ const ClickSpark = () => {
           return false;
         }
 
-        ctx.save();
-        ctx.translate(spark.x, spark.y);
-        ctx.rotate(spark.rotation);
         ctx.font = `${spark.size}px sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(spark.emoji, 0, 0);
-        ctx.restore();
+        ctx.fillText(spark.emoji, spark.x, spark.y);
 
         return true;
       });
